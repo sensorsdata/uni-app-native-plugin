@@ -1,0 +1,96 @@
+{
+  "name": "Sensorsdata-UniPlugin-App",
+  "id": "Sensorsdata-UniPlugin-App",
+  "version": "0.0.1",
+  "description": "插件描述信息",
+  "_dp_type": "nativeplugin",
+  "_dp_nativeplugin": {
+    "android": {
+      "plugins": [{
+        "type": "module",
+        "name": "Sensorsdata-UniPlugin-App",
+        "class": "com.sensorsdata.uniapp.UniSensorsAnalyticsModule"
+      }],
+      "hooksClass": "com.sensorsdata.uniapp.UniSensorsAnalyticsProxy",
+      "compileOptions": {
+        "sourceCompatibility": "1.8",
+        "targetCompatibility": "1.8"
+      },
+      "integrateType": "aar",
+      "minSdkVersion": 19,
+      "permissions": [
+        "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>"
+      ],
+      "dependencies": [
+        "com.sensorsdata.analytics.android:SensorsAnalyticsSDK:5.0.0"
+      ],
+      "parameters": {
+        "auto_track_type": {
+          "des": "全埋点采集类型，0：不开启全埋点采集，1：应用启动，2：应用退出，3：应用启动退出，默认 0",
+          "key": "com.sensorsdata.analytics.uni.AutoTrackType"
+        },
+        "android_max_cache_size": {
+          "des": "设置本地缓存上限值，单位 MB，默认为 32MB：32，最小 16MB，若小于 16MB，则按 16MB 处理。",
+          "key": "com.sensorsdata.analytics.uni.MaxCacheSize"
+        },
+        "show_log": {
+          "des": "设置是否开启 log，true：开启，false：不开启，默认 false",
+          "key": "com.sensorsdata.analytics.uni.EnableLogging"
+        },
+        "encrypt": {
+          "des": "设置是否开启加密，true：开启，false：不开启，默认 false",
+          "key": "com.sensorsdata.analytics.uni.Encrypt"
+        },
+        "android_data_collect": {
+          "des": "设置开启数据采集，true：开启，false：不开启，默认 true",
+          "key": "com.sensorsdata.analytics.uni.DataCollect"
+        },
+        "javascript_bridge": {
+          "des": "开启自动打通所有的 WebView H5 功能。true：开启，false：不开启，默认 false",
+          "key": "com.sensorsdata.analytics.uni.JavaScriptBridge"
+        },
+        "android_javascript_bridge_support_jellybean": {
+          "des": "H5 打通是否支持 API level 16 及以下的版本。true：开启，false：不开启，默认 false。",
+          "key": "com.sensorsdata.analytics.uni.JavaScriptBridgeSupportJellyBean"
+        },
+        "android_mp_process_flush": {
+          "des": "当使用小程序 SDK 时，小程序进程是否可发送数据。",
+          "key": "com.sensorsdata.analytics.uni.MPProcessFlush"
+        }
+      }
+    },"ios":{
+      "plugins": [
+        {
+          "type": "module",
+          "name": "Sensorsdata-UniPlugin-App",
+          "class": "UniSensorsAnalyticsModule"
+        }
+      ],
+      "integrateType": "framework",
+      "hooksClass": "UniSensorsAnalyticsProxy",
+      "deploymentTarget": "9.0",
+      "parameters": {
+        "auto_track_type": {
+          "des": "全埋点采集类型，0：不开启全埋点采集，1：应用启动，2：应用退出，3：应用启动退出，默认 0",
+          "key": "Sensorsdata-UniPlugin-App:autoTrackEventType"
+        },
+        "ios_max_cache_size": {
+          "des": "iOS 设置本地缓存最多事件条数，默认为 10000 条",
+          "key": "Sensorsdata-UniPlugin-App:maxCacheSize"
+        },
+        "show_log": {
+          "des": "设置是否开启 log，true：开启，false：不开启，默认 false",
+          "key": "Sensorsdata-UniPlugin-App:enableLog"
+        },
+        "encrypt": {
+          "des": "设置是否开启加密，true：开启，false：不开启，默认 false",
+          "key": "Sensorsdata-UniPlugin-App:enableEncrypt"
+        },
+        "javascript_bridge": {
+          "des": "开启自动打通所有的 WebView H5 功能。true：开启，false：不开启，默认 false",
+          "key": "Sensorsdata-UniPlugin-App:enableJavaScriptBridge"
+        }
+      }
+    }
+  }
+}

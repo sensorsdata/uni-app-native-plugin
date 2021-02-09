@@ -1,0 +1,3 @@
+include ':SensorsdataUniPlugin'
+include ':app'
+rootProject.name = "uni-app-sdk"
