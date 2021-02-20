@@ -29,7 +29,7 @@
 #import "SensorsAnalyticsSDK.h"
 #endif
 
-static NSString *const kSAUniPluginVersion = @"app_uniapp:0.0.1";
+static NSString *const kSAUniPluginVersion = @"app_uniapp:0.0.2";
 static NSString *const kSAUniPluginVersionKey = @"$lib_plugin_version";
 
 @implementation UniSensorsAnalyticsModule

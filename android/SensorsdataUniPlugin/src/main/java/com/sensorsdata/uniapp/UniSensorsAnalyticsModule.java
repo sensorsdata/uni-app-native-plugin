@@ -32,7 +32,7 @@ import io.dcloud.feature.uniapp.common.UniDestroyableModule;
 
 public class UniSensorsAnalyticsModule extends UniDestroyableModule {
 
-    public static final String VERSION = "0.0.1";
+    public static final String VERSION = "0.0.2";
 
     private static final String MODULE_NAME = "UniSensorsAnalyticsModule";
     private static final String LOG_TAG = "SA.UniModule";
