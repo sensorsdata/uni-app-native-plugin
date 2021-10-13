@@ -1,7 +1,7 @@
 {
   "name": "Sensorsdata-UniPlugin-App",
   "id": "Sensorsdata-UniPlugin-App",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "插件描述信息",
   "_dp_type": "nativeplugin",
   "_dp_nativeplugin": {
@@ -22,9 +22,17 @@
         "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>"
       ],
       "dependencies": [
-        "com.sensorsdata.analytics.android:SensorsAnalyticsSDK:5.0.0"
+        "com.sensorsdata.analytics.android:SensorsAnalyticsSDK:5.4.5"
       ],
       "parameters": {
+        "server_url": {
+          "des": "设置数据接收地址，如果有 `&` 符号需转义为 `&amp;`",
+          "key": "com.sensorsdata.analytics.uni.ServerUrl"
+        },
+        "remote_config_url": {
+          "des": "自定义远程配置请求地址，，如果有 `&` 符号需转义为 `&amp;`",
+          "key": "com.sensorsdata.analytics.uni.RemoteConfigUrl"
+        },
         "auto_track_type": {
           "des": "全埋点采集类型，0：不开启全埋点采集，1：应用启动，2：应用退出，3：应用启动退出，默认 0",
           "key": "com.sensorsdata.analytics.uni.AutoTrackType"
@@ -56,9 +64,14 @@
         "android_mp_process_flush": {
           "des": "当使用小程序 SDK 时，小程序进程是否可发送数据。",
           "key": "com.sensorsdata.analytics.uni.MPProcessFlush"
+        },
+        "enable_auto_add_channel_callback_event": {
+          "des": "开启自定义事件渠道回传匹配逻辑。true：开启，false：不开启，默认 false",
+          "key": "com.sensorsdata.analytics.uni.EventAutoAddChannelCallbackEvent"
         }
       }
-    },"ios":{
+    },
+    "ios": {
       "plugins": [
         {
           "type": "module",
@@ -70,6 +83,14 @@
       "hooksClass": "UniSensorsAnalyticsProxy",
       "deploymentTarget": "9.0",
       "parameters": {
+        "server_url": {
+          "des": "设置数据接收地址，如果有 `&` 符号需转义为 `&amp;`",
+          "key": "Sensorsdata-UniPlugin-App:serverUrl"
+        },
+        "remote_config_url": {
+          "des": "自定义远程配置请求地址，，如果有 `&` 符号需转义为 `&amp;`",
+          "key": "Sensorsdata-UniPlugin-App:remoteConfigUrl"
+        },
         "auto_track_type": {
           "des": "全埋点采集类型，0：不开启全埋点采集，1：应用启动，2：应用退出，3：应用启动退出，默认 0",
           "key": "Sensorsdata-UniPlugin-App:autoTrackEventType"
@@ -89,6 +110,10 @@
         "javascript_bridge": {
           "des": "开启自动打通所有的 WebView H5 功能。true：开启，false：不开启，默认 false",
           "key": "Sensorsdata-UniPlugin-App:enableJavaScriptBridge"
+        },
+        "enable_auto_add_channel_callback_event": {
+          "des": "开启自定义事件渠道回传匹配逻辑。true：开启，false：不开启，默认 false",
+          "key": "Sensorsdata-UniPlugin-App:enableAutoAddChannelCallbackEvent"
         }
       }
     }

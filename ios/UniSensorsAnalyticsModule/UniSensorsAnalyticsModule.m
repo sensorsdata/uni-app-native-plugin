@@ -29,12 +29,16 @@
 #import "SensorsAnalyticsSDK.h"
 #endif
 
-static NSString *const kSAUniPluginVersion = @"app_uniapp:0.0.2";
+static NSString *const kSAUniPluginVersion = @"app_uniapp:0.0.3";
 static NSString *const kSAUniPluginVersionKey = @"$lib_plugin_version";
 
 @implementation UniSensorsAnalyticsModule
 
 - (NSDictionary *)appendPluginVersion:(NSDictionary *)properties {
+    if (![properties isKindOfClass:NSDictionary.class]) {
+        properties = [NSDictionary dictionary];
+    }
+
     if (properties[kSAUniPluginVersionKey]) {
         return properties;
     }
@@ -64,6 +68,10 @@ WX_EXPORT_METHOD(@selector(track:properties:))
  * @param properties 事件的属性
  */
 - (void)track:(NSString *)eventName properties:(NSDictionary *)properties {
+    if (![eventName isKindOfClass:NSString.class]) {
+        NSLog(@" ❌ [UniSensorsAnalyticsModule Error] Event name[%@] not valid", eventName);
+        return;
+    }
     [self performSelectorWithImplementation:^{
         NSDictionary *eventProps = [self appendPluginVersion:properties];
         [[SensorsAnalyticsSDK sharedInstance] track:eventName withProperties:eventProps];
@@ -282,9 +290,12 @@ WX_EXPORT_METHOD(@selector(setFlushNetworkPolicy:))
  * @param flushNetworkPolicy int 网络类型
  */
 - (void)setFlushNetworkPolicy:(NSNumber *)flushNetworkPolicy {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     [self performSelectorWithImplementation:^{
         [[SensorsAnalyticsSDK sharedInstance] setFlushNetworkPolicy:flushNetworkPolicy.integerValue];
     }];
+#pragma clang diagnostic pop
 }
 
 WX_EXPORT_METHOD(@selector(setFlushInterval:))
@@ -450,6 +461,124 @@ WX_EXPORT_METHOD(@selector(enableDataCollect))
  */
 - (void)enableDataCollect {
 
+}
+
+#pragma mark - Phase Two
+WX_EXPORT_METHOD(@selector(removeTimer:))
+- (void)removeTimer:(NSString *)eventName {
+    [self performSelectorWithImplementation:^{
+        [SensorsAnalyticsSDK.sharedInstance removeTimer:eventName];
+    }];
+}
+
+WX_EXPORT_METHOD_SYNC(@selector(trackTimerStart:))
+- (NSString *)trackTimerStart:(NSString *)eventName {
+    __block NSString *eventId;
+    [self performSelectorWithImplementation:^{
+        eventId = [SensorsAnalyticsSDK.sharedInstance trackTimerStart:eventName];
+    }];
+    return eventId;
+}
+
+WX_EXPORT_METHOD(@selector(trackTimerPause:))
+- (void)trackTimerPause:(NSString *)eventName {
+    [self performSelectorWithImplementation:^{
+        [SensorsAnalyticsSDK.sharedInstance trackTimerPause:eventName];
+    }];
+}
+
+WX_EXPORT_METHOD(@selector(trackTimerResume:))
+- (void)trackTimerResume:(NSString *)eventName {
+    [self performSelectorWithImplementation:^{
+        [SensorsAnalyticsSDK.sharedInstance trackTimerResume:eventName];
+    }];
+}
+
+WX_EXPORT_METHOD(@selector(trackTimerEnd:properties:))
+- (void)trackTimerEnd:(NSString *)eventName properties:(NSDictionary *)properties {
+    if (![eventName isKindOfClass:NSString.class]) {
+        NSLog(@" ❌ [UniSensorsAnalyticsModule Error] Event name[%@] not valid", eventName);
+        return;
+    }
+    [self performSelectorWithImplementation:^{
+        NSDictionary *eventProps = [self appendPluginVersion:properties];
+        [SensorsAnalyticsSDK.sharedInstance trackTimerEnd:eventName withProperties:eventProps];
+    }];
+}
+
+WX_EXPORT_METHOD(@selector(clearTrackTimer))
+- (void)clearTrackTimer {
+    [self performSelectorWithImplementation:^{
+        [SensorsAnalyticsSDK.sharedInstance clearTrackTimer];
+    }];
+}
+
+WX_EXPORT_METHOD(@selector(trackViewScreen:properties:))
+- (void)trackViewScreen:(NSString *)url properties:(NSDictionary *)properties {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    [self performSelectorWithImplementation:^{
+        NSDictionary *eventProps = [self appendPluginVersion:properties];
+        [[SensorsAnalyticsSDK sharedInstance] trackViewScreen:url withProperties:eventProps];
+    }];
+#pragma clang diagnostic pop
+}
+
+WX_EXPORT_METHOD_SYNC(@selector(getSuperProperties))
+- (NSDictionary *)getSuperProperties {
+    __block NSDictionary *properties;
+    [self performSelectorWithImplementation:^{
+        properties = [SensorsAnalyticsSDK.sharedInstance currentSuperProperties];
+    }];
+    return properties;
+}
+
+WX_EXPORT_METHOD(@selector(enableTrackScreenOrientation:))
+- (void)enableTrackScreenOrientation:(BOOL)enable {
+    [self performSelectorWithImplementation:^{
+        [SensorsAnalyticsSDK.sharedInstance enableTrackScreenOrientation:enable];
+    }];
+}
+
+WX_EXPORT_METHOD(@selector(resumeTrackScreenOrientation))
+- (void)resumeTrackScreenOrientation {
+    // Android 方法空实现
+}
+
+WX_EXPORT_METHOD(@selector(stopTrackScreenOrientation))
+- (void)stopTrackScreenOrientation {
+    // Android 方法空实现
+}
+
+WX_EXPORT_METHOD_SYNC(@selector(getScreenOrientation))
+- (NSString *)getScreenOrientation {
+    return @"";
+}
+
+WX_EXPORT_METHOD(@selector(profilePushId:pushId:))
+- (void)profilePushId:(NSString *)pushKey pushId:(NSString *)pushId {
+    [self performSelectorWithImplementation:^{
+        [SensorsAnalyticsSDK.sharedInstance profilePushKey:pushKey pushId:pushId];
+    }];
+}
+
+WX_EXPORT_METHOD(@selector(profileUnsetPushId:))
+- (void)profileUnsetPushId:(NSString *)pushKey {
+    [self performSelectorWithImplementation:^{
+        [SensorsAnalyticsSDK.sharedInstance profileUnsetPushKey:pushKey];
+    }];
+}
+
+WX_EXPORT_METHOD(@selector(enableDeepLinkInstallSource:))
+- (void)enableDeepLinkInstallSource:(BOOL)enable {
+    // Android 方法空实现
+}
+
+WX_EXPORT_METHOD(@selector(trackDeepLinkLaunch:))
+- (void)trackDeepLinkLaunch:(NSString *)deeplinkUrl {
+    [self performSelectorWithImplementation:^{
+        [SensorsAnalyticsSDK.sharedInstance trackDeepLinkLaunchWithURL:deeplinkUrl];
+    }];
 }
 
 @end

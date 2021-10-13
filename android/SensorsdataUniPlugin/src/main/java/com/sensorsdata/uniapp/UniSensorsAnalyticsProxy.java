@@ -132,6 +132,22 @@ public class UniSensorsAnalyticsProxy implements UniAppHookProxy {
             } catch (Exception ignored) {
 
             }
+            //设置远程配置请求地址
+            try {
+                String remoteConfigUrl = appInfo.metaData.getString("com.sensorsdata.analytics.uni.RemoteConfigUrl");
+                if (!TextUtils.isEmpty(remoteConfigUrl)) {
+                    configOptions.setRemoteConfigUrl(remoteConfigUrl);
+                }
+            } catch (Exception ignored) {
+
+            }
+            // 是否在手动埋点事件中自动添加渠道匹配信息，默认 false
+            try {
+                boolean enableAutoAddChannelCallbackEvent = appInfo.metaData.getBoolean("com.sensorsdata.analytics.uni.EventAutoAddChannelCallbackEvent", false);
+                configOptions.enableAutoAddChannelCallbackEvent(enableAutoAddChannelCallbackEvent);
+            } catch (Exception ignored) {
+
+            }
         } catch (PackageManager.NameNotFoundException e) {
             Log.i(LOG_TAG, e.getMessage());
         }

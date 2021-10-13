@@ -32,7 +32,7 @@ import io.dcloud.feature.uniapp.common.UniDestroyableModule;
 
 public class UniSensorsAnalyticsModule extends UniDestroyableModule {
 
-    public static final String VERSION = "0.0.2";
+    public static final String VERSION = "0.0.3";
 
     private static final String MODULE_NAME = "UniSensorsAnalyticsModule";
     private static final String LOG_TAG = "SA.UniModule";
@@ -47,6 +47,21 @@ public class UniSensorsAnalyticsModule extends UniDestroyableModule {
     public void track(String eventName, JSONObject properties) {
         try {
             SensorsDataAPI.sharedInstance().track(eventName, UniPropertyManager.mergeProperty(JSONUtils.convertToJSONObject(properties)));
+        } catch (Exception e) {
+            Log.i(LOG_TAG, e.getMessage());
+        }
+    }
+
+    /**
+     * 调用 trackViewScreen 接口，触发页面浏览事件
+     *
+     * @param url url
+     * @param properties 事件的属性
+     */
+    @UniJSMethod()
+    public void trackViewScreen(String url, JSONObject properties) {
+        try {
+            SensorsDataAPI.sharedInstance().trackViewScreen(url, UniPropertyManager.mergeProperty(JSONUtils.convertToJSONObject(properties)));
         } catch (Exception e) {
             Log.i(LOG_TAG, e.getMessage());
         }
@@ -494,6 +509,217 @@ public class UniSensorsAnalyticsModule extends UniDestroyableModule {
         }
     }
 
+    /**
+     * 保存用户推送 ID 到用户表
+     *
+     * @param pushTypeKey 属性名称（例如 jgId）
+     * @param pushId 推送 ID
+     * 使用 profilePushId("jgId",JPushInterface.getRegistrationID(this))
+     */
+    @UniJSMethod
+    public void profilePushId(String pushTypeKey, String pushId) {
+        try {
+            SensorsDataAPI.sharedInstance().profilePushId(pushTypeKey, pushId);
+        } catch (Exception e) {
+            Log.i(LOG_TAG, e.getMessage());
+        }
+    }
+
+    /**
+     * 删除用户设置的 pushId
+     *
+     * @param pushTypeKey 属性名称（例如 jgId）
+     */
+    @UniJSMethod
+    public void profileUnsetPushId(String pushTypeKey) {
+        try {
+            SensorsDataAPI.sharedInstance().profileUnsetPushId(pushTypeKey);
+        } catch (Exception e) {
+            Log.i(LOG_TAG, e.getMessage());
+        }
+    }
+
+    /**
+     * 初始化事件的计时器，计时单位为秒。
+     *
+     * @param eventName 事件的名称
+     * @return 交叉计时的事件名称
+     */
+    @UniJSMethod(uiThread = false)
+    public String trackTimerStart(String eventName) {
+        try {
+            return SensorsDataAPI.sharedInstance().trackTimerStart(eventName);
+        } catch (Exception e) {
+            Log.i(LOG_TAG, e.getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * 暂停事件计时器，计时单位为秒。
+     *
+     * @param eventName 事件的名称
+     */
+    @UniJSMethod()
+    public void trackTimerPause(String eventName) {
+        try {
+            SensorsDataAPI.sharedInstance().trackTimerPause(eventName);
+        } catch (Exception e) {
+            Log.i(LOG_TAG, e.getMessage());
+        }
+    }
+
+    /**
+     * 恢复事件计时器，计时单位为秒。
+     *
+     * @param eventName 事件的名称
+     */
+    @UniJSMethod()
+    public void trackTimerResume(String eventName) {
+        try {
+            SensorsDataAPI.sharedInstance().trackTimerResume(eventName);
+        } catch (Exception e) {
+            Log.i(LOG_TAG, e.getMessage());
+        }
+    }
+
+    /**
+     * 停止事件计时器
+     *
+     * @param eventName 事件的名称，或者交叉计算场景时 trackTimerStart 的返回值
+     * @param properties 事件的属性
+     */
+    @UniJSMethod()
+    public void trackTimerEnd(String eventName, JSONObject properties) {
+        try {
+            SensorsDataAPI.sharedInstance().trackTimerEnd(eventName, UniPropertyManager.mergeProperty(JSONUtils.convertToJSONObject(properties)));
+        } catch (Exception e) {
+            Log.i(LOG_TAG, e.getMessage());
+        }
+    }
+
+    /**
+     * 删除事件的计时器
+     *
+     * @param eventName 事件名称
+     */
+    @UniJSMethod()
+    public void removeTimer(String eventName) {
+        try {
+            SensorsDataAPI.sharedInstance().removeTimer(eventName);
+        } catch (Exception e) {
+            Log.i(LOG_TAG, e.getMessage());
+        }
+    }
+
+    /**
+     * 清除所有事件计时器
+     */
+    @UniJSMethod
+    public void clearTrackTimer() {
+        try {
+            SensorsDataAPI.sharedInstance().clearTrackTimer();
+        } catch (Exception e) {
+            Log.i(LOG_TAG, e.getMessage());
+        }
+    }
+
+    /**
+     * 获取事件公共属性
+     *
+     * @return 当前所有 Super 属性
+     */
+    @UniJSMethod(uiThread = false)
+    public JSONObject getSuperProperties() {
+        try {
+            return JSONUtils.convertToFastJson(SensorsDataAPI.sharedInstance().getSuperProperties());
+        } catch (Exception e) {
+            Log.i(LOG_TAG, e.getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * DeepLink 是否采集设备信息
+     *
+     * @param enable 是否采集设备信息 true:是 false：否
+     */
+    @UniJSMethod
+    public void enableDeepLinkInstallSource(boolean enable) {
+        try {
+            SensorsDataAPI.sharedInstance().enableDeepLinkInstallSource(enable);
+        } catch (Exception e) {
+            Log.i(LOG_TAG, e.getMessage());
+        }
+    }
+
+    /**
+     * 记录 $AppDeepLinkLaunch 事件
+     *
+     * @param deepLinkUrl 唤起应用的 DeepLink 链接
+     * @param oaid oaid 非必填
+     */
+    @UniJSMethod
+    public void trackDeepLinkLaunch(String deepLinkUrl, String oaid) {
+        try {
+            SensorsDataAPI.sharedInstance().trackDeepLinkLaunch(deepLinkUrl, oaid);
+        } catch (Exception e) {
+            Log.i(LOG_TAG, e.getMessage());
+        }
+    }
+
+    /**
+     * 开启/关闭采集屏幕方向
+     *
+     * @param enable true：开启 false：关闭
+     */
+    @UniJSMethod
+    public void enableTrackScreenOrientation(boolean enable) {
+        try {
+            SensorsDataAPI.sharedInstance().enableTrackScreenOrientation(enable);
+        } catch (Exception e) {
+            Log.i(LOG_TAG, e.getMessage());
+        }
+    }
+
+    /**
+     * 恢复采集屏幕方向
+     */
+    @UniJSMethod
+    public void resumeTrackScreenOrientation() {
+        try {
+            SensorsDataAPI.sharedInstance().resumeTrackScreenOrientation();
+        } catch (Exception e) {
+            Log.i(LOG_TAG, e.getMessage());
+        }
+    }
+
+    /**
+     * 停止采集屏幕方向
+     */
+    @UniJSMethod
+    public void stopTrackScreenOrientation() {
+        try {
+            SensorsDataAPI.sharedInstance().stopTrackScreenOrientation();
+        } catch (Exception e) {
+            Log.i(LOG_TAG, e.getMessage());
+        }
+    }
+
+    /**
+     * 获取当前屏幕方向
+     *
+     * @return portrait:竖屏 landscape:横屏
+     */
+    @UniJSMethod(uiThread = false)
+    public String getScreenOrientation() {
+        try {
+            return SensorsDataAPI.sharedInstance().getScreenOrientation();
+        } catch (Exception e) {
+            Log.i(LOG_TAG, e.getMessage());
+        }
+        return "";
+    }
 
     @Override
     public void destroy() {
