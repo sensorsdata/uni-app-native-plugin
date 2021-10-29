@@ -1,7 +1,7 @@
 {
   "name": "Sensorsdata-UniPlugin-App",
   "id": "Sensorsdata-UniPlugin-App",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "插件描述信息",
   "_dp_type": "nativeplugin",
   "_dp_nativeplugin": {
@@ -22,7 +22,8 @@
         "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>"
       ],
       "dependencies": [
-        "com.sensorsdata.analytics.android:SensorsAnalyticsSDK:5.4.5"
+        "com.sensorsdata.analytics.android:SensorsAnalyticsSDK:5.4.5",
+        "com.sensorsdata.analytics.android:SensorsFocusSDK:0.4.5"
       ],
       "parameters": {
         "server_url": {
@@ -68,6 +69,14 @@
         "enable_auto_add_channel_callback_event": {
           "des": "开启自定义事件渠道回传匹配逻辑。true：开启，false：不开启，默认 false",
           "key": "com.sensorsdata.analytics.uni.EventAutoAddChannelCallbackEvent"
+        },
+        "sfo_base_url": {
+          "des": "当使用弹窗 SDK 时，填入在线服务地址",
+          "key": "com.sensorsfocus.apibaseurl"
+        },
+        "android_sfo_enable_popup" : {
+          "des" : "初始化禁止弹窗显示，默认为 true，如果设置为 false，主页显示时，请调用 enablePopup",
+          "key" : "com.sensorsfocus.enablePopup"
         }
       }
     },
@@ -114,6 +123,10 @@
         "enable_auto_add_channel_callback_event": {
           "des": "开启自定义事件渠道回传匹配逻辑。true：开启，false：不开启，默认 false",
           "key": "Sensorsdata-UniPlugin-App:enableAutoAddChannelCallbackEvent"
+        },
+        "sfo_base_url": {
+          "des": "当使用弹窗 SDK 时，填入在线服务地址",
+          "key": "Sensorsdata-UniPlugin-App:sfoBaseUrl"
         }
       }
     }

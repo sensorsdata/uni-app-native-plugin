@@ -29,7 +29,7 @@
 #import "SensorsAnalyticsSDK.h"
 #endif
 
-static NSString *const kSAUniPluginVersion = @"app_uniapp:0.0.3";
+static NSString *const kSAUniPluginVersion = @"app_uniapp:0.0.4";
 static NSString *const kSAUniPluginVersionKey = @"$lib_plugin_version";
 
 @implementation UniSensorsAnalyticsModule
@@ -579,6 +579,47 @@ WX_EXPORT_METHOD(@selector(trackDeepLinkLaunch:))
     [self performSelectorWithImplementation:^{
         [SensorsAnalyticsSDK.sharedInstance trackDeepLinkLaunchWithURL:deeplinkUrl];
     }];
+}
+
+// MARK: SF Related
++ (instancetype)sharedModule {
+    static UniSensorsAnalyticsModule *sharedInstance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedInstance = [[UniSensorsAnalyticsModule alloc] init];
+    });
+    return sharedInstance;
+}
+
+
+UNI_EXPORT_METHOD(@selector(popupLoadSuccess:))
+
+-(void)popupLoadSuccess:(UniModuleKeepAliveCallback)callback {
+    [UniSensorsAnalyticsModule sharedModule].popupLoadSuccessCallback = callback;
+}
+
+UNI_EXPORT_METHOD(@selector(popupClose:))
+
+-(void)popupClose:(UniModuleKeepAliveCallback)callback {
+    [UniSensorsAnalyticsModule sharedModule].popupCloseCallback = callback;
+}
+
+UNI_EXPORT_METHOD(@selector(popupClick:))
+
+-(void)popupClick:(UniModuleKeepAliveCallback)callback {
+    [UniSensorsAnalyticsModule sharedModule].popupClickCallback = callback;
+}
+
+UNI_EXPORT_METHOD(@selector(popupLoadFailed:))
+
+-(void)popupLoadFailed:(UniModuleKeepAliveCallback)callback {
+    [UniSensorsAnalyticsModule sharedModule].popupLoadFailedCallback = callback;
+}
+
+UNI_EXPORT_METHOD(@selector(enablePopup:))
+//Android 为了处理开屏页弹窗需要，iOS接口保持统一，但不需要实现
+-(void)enablePopup:(BOOL)enable {
+
 }
 
 @end

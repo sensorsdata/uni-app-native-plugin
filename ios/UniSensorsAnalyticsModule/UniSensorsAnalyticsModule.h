@@ -20,10 +20,18 @@
 
 #import <Foundation/Foundation.h>
 #import "WeexSDK.h"
+#import "DCUniModule.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface UniSensorsAnalyticsModule : NSObject <WXModuleProtocol>
+@interface UniSensorsAnalyticsModule : DCUniModule <WXModuleProtocol>
+
++ (instancetype)sharedModule;
+
+@property (nonatomic, strong) UniModuleKeepAliveCallback popupLoadSuccessCallback;
+@property (nonatomic, strong) UniModuleKeepAliveCallback popupCloseCallback;
+@property (nonatomic, strong) UniModuleKeepAliveCallback popupClickCallback;
+@property (nonatomic, strong) UniModuleKeepAliveCallback popupLoadFailedCallback;
 
 @end
 

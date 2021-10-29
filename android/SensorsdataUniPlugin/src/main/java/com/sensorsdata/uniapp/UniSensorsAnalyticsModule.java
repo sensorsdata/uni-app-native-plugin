@@ -22,17 +22,20 @@ import android.util.Log;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
+import com.sensorsdata.sf.core.SensorsFocusAPI;
 import com.sensorsdata.uniapp.property.UniPropertyManager;
+import com.sensorsdata.uniapp.sf.UniCampaignListener;
 import com.sensorsdata.uniapp.util.JSONUtils;
 
 import java.util.Map;
 
 import io.dcloud.feature.uniapp.annotation.UniJSMethod;
+import io.dcloud.feature.uniapp.bridge.UniJSCallback;
 import io.dcloud.feature.uniapp.common.UniDestroyableModule;
 
 public class UniSensorsAnalyticsModule extends UniDestroyableModule {
 
-    public static final String VERSION = "0.0.3";
+    public static final String VERSION = "0.0.4";
 
     private static final String MODULE_NAME = "UniSensorsAnalyticsModule";
     private static final String LOG_TAG = "SA.UniModule";
@@ -721,8 +724,59 @@ public class UniSensorsAnalyticsModule extends UniDestroyableModule {
         return "";
     }
 
+    /**
+     * 注册弹窗成功的回调，预置弹窗和自定义会回调此接口
+     *
+     * @param callback callback
+     */
+    @UniJSMethod()
+    public void popupLoadSuccess(UniJSCallback callback) {
+        UniCampaignListener.loadSuccessJSCallback = callback;
+    }
+
+    /**
+     * 注册弹窗失败的回调，预置弹窗和自定义会回调此接口
+     *
+     * @param callback callback
+     */
+    @UniJSMethod()
+    public void popupLoadFailed(UniJSCallback callback) {
+        UniCampaignListener.loadFailedJSCallback = callback;
+    }
+
+    /**
+     * 注册弹窗点击的回调，预置弹窗会回调此接口
+     *
+     * @param callback callback
+     */
+    @UniJSMethod()
+    public void popupClick(UniJSCallback callback) {
+        UniCampaignListener.clickJSCallback = callback;
+    }
+
+    /**
+     * 注册弹窗点击的回调，预置弹窗会回调此接口
+     *
+     * @param callback callback
+     */
+    @UniJSMethod()
+    public void popupClose(UniJSCallback callback) {
+        UniCampaignListener.closeJSCallback = callback;
+    }
+
+    /**
+     * 运行弹窗，与初始化的 android_sfo_enable_popup 配合使用
+     */
+    @UniJSMethod()
+    public void enablePopup() {
+        try {
+            SensorsFocusAPI.sharedInstance().enablePopup();
+        } catch (Exception e) {
+            Log.i(LOG_TAG, e.getMessage());
+        }
+    }
+
     @Override
     public void destroy() {
     }
-
 }

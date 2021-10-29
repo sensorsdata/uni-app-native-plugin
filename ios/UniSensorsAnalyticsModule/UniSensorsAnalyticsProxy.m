@@ -28,6 +28,8 @@
 #else
 #import "SensorsAnalyticsSDK.h"
 #endif
+#import <SensorsFocus/SensorsFocus.h>
+#import "UniSensorsAnalyticsModule.h"
 
 static NSString *kSAPluginName = @"Sensorsdata-UniPlugin-App";
 static NSString *kSAServerUrlKey = @"serverUrl";
@@ -38,6 +40,19 @@ static NSString *kSAEnableEncryptKey = @"enableEncrypt";
 static NSString *kSAEnableJavaScriptBridgeKey = @"enableJavaScriptBridge";
 static NSString *kSARemoteCongUrl = @"remoteConfigUrl";
 static NSString *kSAEnableAutoAddChannelCallbackEvent = @"enableAutoAddChannelCallbackEvent";
+
+static NSString *kSFBaseURLKey = @"sfoBaseUrl";
+static NSString *kSFPlanIdKey = @"planId";
+static NSString *kSFTypeKey = @"type";
+static NSString *kSFCampaignContentKey = @"content";
+static NSString *kSFErrorKey = @"error";
+static NSString *kSFActionKey = @"action";
+static NSString *kSFActionValueKey = @"value";
+static NSString *kSFActionExtraKey = @"extra";
+
+@interface UniSensorsAnalyticsProxy () <SensorsFocusPopupDelegate, SensorsFocusCampaignDelegate>
+
+@end
 
 @implementation UniSensorsAnalyticsProxy
 
@@ -74,6 +89,16 @@ static NSString *kSAEnableAutoAddChannelCallbackEvent = @"enableAutoAddChannelCa
     options.remoteConfigURL = remoteConfigURL;
     options.enableAutoAddChannelCallbackEvent = enableAutoAddChannelCallbackEvent;
     [SensorsAnalyticsSDK startWithConfigOptions:options];
+
+    //init SF SDK
+    NSString *sfoBaseURL = [self objectForInfoDictionaryKey:kSFBaseURLKey];
+    sfoBaseURL = [sfoBaseURL stringByReplacingOccurrencesOfString:@"&amp" withString:@"&"];
+    if (sfoBaseURL.length > 0) {
+        SFConfigOptions *sfOptions = [[SFConfigOptions alloc] initWithApiBaseURL:sfoBaseURL];
+        sfOptions.popupDelegate = self;
+        sfOptions.campaignDelegate = self;
+        [SensorsFocus startWithConfigOptions:sfOptions];
+    }
 }
 
 #pragma mark - uni-app plugin lifeCycle
@@ -87,19 +112,19 @@ static NSString *kSAEnableAutoAddChannelCallbackEvent = @"enableAutoAddChannelCa
 }
 
 - (BOOL)application:(UIApplication *_Nullable)application handleOpenURL:(NSURL *_Nullable)url {
-    return [[SensorsAnalyticsSDK sharedInstance] handleSchemeUrl:url];
+    return [self handleSchemeUrl:url];
 }
 
 - (BOOL)application:(UIApplication *_Nullable)application openURL:(NSURL *_Nullable)url sourceApplication:(NSString *_Nullable)sourceApplication annotation:(id _Nonnull )annotation {
-    return [[SensorsAnalyticsSDK sharedInstance] handleSchemeUrl:url];
+    return [self handleSchemeUrl:url];
 }
 
 - (BOOL)application:(UIApplication *_Nullable)app openURL:(NSURL *_Nonnull)url options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *_Nullable)options {
-    return [[SensorsAnalyticsSDK sharedInstance] handleSchemeUrl:url];
+    return [self handleSchemeUrl:url];
 }
 
 - (BOOL)application:(UIApplication *_Nullable)application continueUserActivity:(NSUserActivity *_Nullable)userActivity restorationHandler:(void(^_Nullable)(NSArray * __nullable restorableObjects))restorationHandler {
-    return [[SensorsAnalyticsSDK sharedInstance] handleSchemeUrl:userActivity.webpageURL];
+    return [self handleSchemeUrl:userActivity.webpageURL];
 }
 
 - (void)application:(UIApplication * _Nullable)application didFailToRegisterForRemoteNotificationsWithError:(NSError * _Nullable)err {
@@ -164,6 +189,79 @@ static NSString *kSAEnableAutoAddChannelCallbackEvent = @"enableAutoAddChannelCa
 
 - (void)applicationWillTerminate:(UIApplication * _Nullable)application {
 
+}
+
+
+//MARK: SensorsFocusPopupDelegate
+- (void)popupDidClickWithPlanID:(NSString *)planID action:(SensorsFocusActionModel *)action {
+    if (![UniSensorsAnalyticsModule sharedModule].popupClickCallback) {
+        return;
+    }
+    NSMutableDictionary *properties = [[NSMutableDictionary alloc] init];
+    properties[kSFPlanIdKey] = planID;
+    NSString *actionType = nil;
+    switch (action.type) {
+        case SensorsFocusActionTypeCopy:
+            actionType = @"copy";
+            break;
+        case SensorsFocusActionTypeClose:
+            actionType = @"close";
+            break;
+        case SensorsFocusActionTypeCustomize:
+            actionType = @"customize";
+            break;
+        case SensorsFocusActionTypeOpenlink:
+            actionType = @"openlink";
+            break;
+        default:
+            actionType = @"unknown";
+            break;
+    }
+    properties[kSFActionKey] = @{kSFTypeKey: actionType, kSFActionValueKey: action.value ?: @"", kSFActionExtraKey: action.extra ?: [NSDictionary dictionary]};
+
+    [UniSensorsAnalyticsModule sharedModule].popupClickCallback(properties, YES);
+}
+
+//MARK: SensorsFocusCampaignDelegate
+- (void)campaignDidStart:(SFCampaign *)campaign {
+    if (![UniSensorsAnalyticsModule sharedModule].popupLoadSuccessCallback) {
+        return;
+    }
+    NSMutableDictionary *properties = [self propertiesWithCampain:campaign];
+    [UniSensorsAnalyticsModule sharedModule].popupLoadSuccessCallback([properties copy], YES);
+}
+
+- (void)campaignDidEnd:(SFCampaign *)campaign {
+    if (![UniSensorsAnalyticsModule sharedModule].popupCloseCallback) {
+        return;
+    }
+    NSMutableDictionary *properties = [self propertiesWithCampain:campaign];
+    [UniSensorsAnalyticsModule sharedModule].popupCloseCallback(properties, YES);
+}
+
+- (void)campaignFailed:(SFCampaign *)campaign error:(NSError *)error {
+    if (![UniSensorsAnalyticsModule sharedModule].popupLoadFailedCallback) {
+        return;
+    }
+    NSMutableDictionary *properties = [self propertiesWithCampain:campaign];
+    properties[kSFErrorKey] = error.localizedDescription;
+    [UniSensorsAnalyticsModule sharedModule].popupLoadFailedCallback(properties, YES);
+}
+
+- (NSMutableDictionary *)propertiesWithCampain:(SFCampaign *)campaign {
+    NSMutableDictionary *properties = [[NSMutableDictionary alloc] init];
+    properties[kSFPlanIdKey] = campaign.planID;
+    properties[kSFTypeKey] = campaign.type == SFCampaignTypePreset ? @"preset" : @"customize";
+    properties[kSFCampaignContentKey] = campaign.content;
+    return properties;
+}
+
+- (BOOL)handleSchemeUrl:(NSURL *)url {
+    NSString *sfoBaseURL = [self objectForInfoDictionaryKey:kSFBaseURLKey];
+    if (sfoBaseURL.length > 0 && [SensorsFocus handleOpenURL:url]) {
+        return YES;
+    }
+    return [[SensorsAnalyticsSDK sharedInstance] handleSchemeUrl:url];
 }
 
 @end
