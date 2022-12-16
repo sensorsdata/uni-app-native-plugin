@@ -17,14 +17,18 @@
 
 package com.sensorsdata.uniapp;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
+import com.sensorsdata.analytics.android.sdk.SensorsDataAPIEmptyImplementation;
+import com.sensorsdata.sf.core.SFConfigOptions;
 import com.sensorsdata.sf.core.SensorsFocusAPI;
 import com.sensorsdata.uniapp.property.UniPropertyManager;
 import com.sensorsdata.uniapp.sf.UniCampaignListener;
+import com.sensorsdata.uniapp.sf.UniPopupListener;
 import com.sensorsdata.uniapp.util.JSONUtils;
 
 import java.util.Map;
@@ -35,10 +39,10 @@ import io.dcloud.feature.uniapp.common.UniDestroyableModule;
 
 public class UniSensorsAnalyticsModule extends UniDestroyableModule {
 
-    public static final String VERSION = "0.0.4";
+    public static final String VERSION = "0.1.0";
 
     private static final String MODULE_NAME = "UniSensorsAnalyticsModule";
-    private static final String LOG_TAG = "SA.UniModule";
+    public static final String LOG_TAG = "SA.UniModule";
 
     /**
      * 调用 track 接口，追踪一个带有属性的事件
@@ -404,11 +408,7 @@ public class UniSensorsAnalyticsModule extends UniDestroyableModule {
      */
     @UniJSMethod()
     public void enableDataCollect() {
-        try {
-            SensorsDataAPI.sharedInstance().enableDataCollect();
-        } catch (Exception e) {
-            Log.i(LOG_TAG, e.getMessage());
-        }
+
     }
 
     /**
@@ -773,6 +773,38 @@ public class UniSensorsAnalyticsModule extends UniDestroyableModule {
             SensorsFocusAPI.sharedInstance().enablePopup();
         } catch (Exception e) {
             Log.i(LOG_TAG, e.getMessage());
+        }
+    }
+
+    @UniJSMethod
+    public void initSDK(JSONObject jsonConfig) {
+        if (SensorsDataAPI.sharedInstance() instanceof SensorsDataAPIEmptyImplementation) {
+            UniSensorsAnalyticsHelper.initSDK(mWXSDKInstance.getContext(), jsonConfig);
+        }
+    }
+
+    @UniJSMethod
+    public void popupInit(JSONObject jsonConfig) {
+        try {
+            if (jsonConfig != null) {
+                SFConfigOptions sfConfigOptions;
+                String sfBaseUrl = jsonConfig.getString("api_base_url");
+                if (TextUtils.isEmpty(sfBaseUrl)) {
+                    return;
+                }
+                sfConfigOptions = new SFConfigOptions(sfBaseUrl);
+                try {
+                    sfConfigOptions.enablePopup(JSONUtils.optObject(jsonConfig, "enable_popup", Boolean.class, true));
+                } catch (Exception ignored) {
+
+                }
+                SensorsFocusAPI.startWithConfigOptions(mWXSDKInstance.getContext(), sfConfigOptions
+                        .setPopupListener(new UniPopupListener())
+                        .setCampaignListener(new UniCampaignListener()));
+            }
+            Log.i(LOG_TAG, "SensorsFocus SDK init success!");
+        } catch (Exception ignored) {
+            Log.i(LOG_TAG, "SensorsFocus SDK init failed!");
         }
     }
 

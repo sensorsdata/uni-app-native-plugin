@@ -62,4 +62,17 @@ public class JSONUtils {
         return JSON.parseObject(fastJson.toString(), new TypeReference<Set<String>>() {
         });
     }
+
+    public static <T> T optObject(com.alibaba.fastjson.JSONObject object, String key, Class<T> clazz, T defaultValue) {
+        try {
+            T value = object.getObject(key, clazz);
+            if (value == null) {
+                value = defaultValue;
+            }
+            return value;
+        } catch (Exception ignored) {
+
+        }
+        return defaultValue;
+    }
 }

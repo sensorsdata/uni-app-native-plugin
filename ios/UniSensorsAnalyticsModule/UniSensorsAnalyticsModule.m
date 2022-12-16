@@ -28,9 +28,22 @@
 #else
 #import "SensorsAnalyticsSDK.h"
 #endif
+#import <SensorsFocus/SensorsFocus.h>
 
-static NSString *const kSAUniPluginVersion = @"app_uniapp:0.0.4";
+static NSString *const kSAUniPluginVersion = @"app_uniapp:0.1.0";
 static NSString *const kSAUniPluginVersionKey = @"$lib_plugin_version";
+
+static NSString *kSFPlanIdKey = @"planId";
+static NSString *kSFTypeKey = @"type";
+static NSString *kSFCampaignContentKey = @"content";
+static NSString *kSFErrorKey = @"error";
+static NSString *kSFActionKey = @"action";
+static NSString *kSFActionValueKey = @"value";
+static NSString *kSFActionExtraKey = @"extra";
+
+@interface UniSensorsAnalyticsModule () <SensorsFocusPopupDelegate, SensorsFocusCampaignDelegate>
+
+@end
 
 @implementation UniSensorsAnalyticsModule
 
@@ -169,7 +182,7 @@ WX_EXPORT_METHOD(@selector(clearSuperProperties))
     }];
 }
 
-#pragma mark - Profile_*
+#pragma mark - Profile
 WX_EXPORT_METHOD(@selector(profileSet:))
 /**
  * 设置用户的一个或多个 Profile。
@@ -381,6 +394,112 @@ WX_EXPORT_METHOD_SYNC(@selector(getPresetProperties))
     return preset;
 }
 
+WX_EXPORT_METHOD(@selector(initSDK:))
+/*
+ server_url:’数据接收地址‘,
+ show_log:true,//是否开启日志
+ app:{
+     remote_config_url:""
+     flush_interval:1000,
+     flush_bulkSize:100,
+     flush_network_policy:30,
+     auto_track: 3, // 1 应用启动， 2 应用退出，3 应用启动和退出（位运算）
+     encrypt:true,  //是否开启加密
+     add_channel_callback_event:false,//是否开启渠道事件
+     javascript_bridge:true, // H5 打通功能
+     android:{
+         support_jellybean:false //H5 打通是否支持 Android 16 及以下版本
+         session_interval_time:15000,
+         request_network:true,
+         max_cache_size:最大缓存量   ,// 默认 32MB，最小 16MB
+         mp_process_flush:true,//使用小程序 SDK 时，小程序进程是否可发送数据
+     },
+     ios:{
+         max_cache_size: 10000,//最大缓存条数，默认 10000 条
+     }
+ }
+ */
+
+/**
+ 根据配置初始化 SDK
+
+ @param config 初始化参数
+*/
+- (void)initSDK:(NSDictionary *)config {
+    if (![config isKindOfClass:[NSDictionary class]]) {
+        return;
+    }
+
+    NSString *serverURL = config[@"server_url"];
+    if (![serverURL isKindOfClass:[NSString class]]) {
+        return;
+    }
+
+    // 初始化配置
+    SAConfigOptions *configOptions = [[SAConfigOptions alloc] initWithServerURL:serverURL launchOptions:nil];
+
+    NSNumber *enableLog = config[@"show_log"];
+    if ([enableLog isKindOfClass:[NSNumber class]]) {
+        configOptions.enableLog = [enableLog boolValue];
+    }
+
+    /********  App 特有配置解析  ********/
+    NSDictionary *appConfig = config[@"app"];
+    if (![appConfig isKindOfClass:[NSDictionary class]]) {
+        [SensorsAnalyticsSDK startWithConfigOptions:configOptions];
+        return;
+    }
+
+    // 请求远程配置 URL
+    NSString *remoteConfigURL = appConfig[@"remote_config_url"];
+    if ([remoteConfigURL isKindOfClass:NSString.class]) {
+        configOptions.remoteConfigURL = remoteConfigURL;
+    }
+
+    NSNumber *flushInterval = appConfig[@"flush_interval"];
+    if ([flushInterval isKindOfClass:[NSNumber class]]) {
+        configOptions.flushInterval = [flushInterval integerValue];
+    }
+
+    NSNumber *flushBulksize = appConfig[@"flush_bulkSize"];
+    if ([flushBulksize isKindOfClass:[NSNumber class]]) {
+        configOptions.flushBulkSize = [flushBulksize integerValue];
+    }
+
+    NSNumber *networkTypes = appConfig[@"flush_network_policy"];
+    if ([networkTypes isKindOfClass:[NSNumber class]]) {
+        configOptions.flushNetworkPolicy = [networkTypes integerValue];
+    }
+
+    NSNumber *autoTrack = appConfig[@"auto_track"];
+    if ([autoTrack isKindOfClass:[NSNumber class]]) {
+        configOptions.autoTrackEventType = [autoTrack integerValue];
+    }
+
+    NSNumber *enableEncrypt = appConfig[@"encrypt"];
+    if ([enableEncrypt isKindOfClass:[NSNumber class]]) {
+        configOptions.enableEncrypt = [enableEncrypt boolValue];
+    }
+
+    NSNumber *addChannelCallback = appConfig[@"add_channel_callback_event"];
+    if ([addChannelCallback isKindOfClass:[NSNumber class]]) {
+        configOptions.enableAutoAddChannelCallbackEvent = [addChannelCallback boolValue];
+    }
+
+    NSNumber *enableJavascriptBridge = appConfig[@"javascript_bridge"];
+    if ([enableJavascriptBridge isKindOfClass:[NSNumber class]]) {
+        configOptions.enableJavaScriptBridge = [enableJavascriptBridge boolValue];
+    }
+
+    NSDictionary *iOSConfigs = appConfig[@"ios"];
+    if ([iOSConfigs isKindOfClass:[NSDictionary class]] && [iOSConfigs[@"max_cache_size"] isKindOfClass:[NSNumber class]]) {
+        configOptions.maxCacheSize = [iOSConfigs[@"maxCacheSize"] integerValue];
+    }
+
+    // 开启 SDK
+    [SensorsAnalyticsSDK startWithConfigOptions:configOptions];
+}
+
 #pragma mark - SDK IDS
 WX_EXPORT_METHOD_SYNC(@selector(getDistinctID))
 /**
@@ -581,7 +700,7 @@ WX_EXPORT_METHOD(@selector(trackDeepLinkLaunch:))
     }];
 }
 
-// MARK: SF Related
+#pragma mark - SF Related
 + (instancetype)sharedModule {
     static UniSensorsAnalyticsModule *sharedInstance = nil;
     static dispatch_once_t onceToken;
@@ -620,6 +739,88 @@ UNI_EXPORT_METHOD(@selector(enablePopup:))
 //Android 为了处理开屏页弹窗需要，iOS接口保持统一，但不需要实现
 -(void)enablePopup:(BOOL)enable {
 
+}
+
+UNI_EXPORT_METHOD(@selector(popupInit:))
+- (void)popupInit:(NSDictionary *)popupConfig {
+    if (![popupConfig isKindOfClass:[NSDictionary class]]) {
+        return;
+    }
+
+    NSString *sfoBaseURL = popupConfig[@"api_base_url"];
+    if (![sfoBaseURL isKindOfClass:[NSString class]]) {
+        return;
+    }
+
+    SFConfigOptions *sfOptions = [[SFConfigOptions alloc] initWithApiBaseURL:sfoBaseURL];
+    sfOptions.popupDelegate = self;
+    sfOptions.campaignDelegate = self;
+    [SensorsFocus startWithConfigOptions:sfOptions];
+}
+
+
+//MARK: SensorsFocusPopupDelegate
+- (void)popupDidClickWithPlanID:(NSString *)planID action:(SensorsFocusActionModel *)action {
+    if (![UniSensorsAnalyticsModule sharedModule].popupClickCallback) {
+        return;
+    }
+    NSMutableDictionary *properties = [[NSMutableDictionary alloc] init];
+    properties[kSFPlanIdKey] = planID;
+    NSString *actionType = nil;
+    switch (action.type) {
+        case SensorsFocusActionTypeCopy:
+            actionType = @"copy";
+            break;
+        case SensorsFocusActionTypeClose:
+            actionType = @"close";
+            break;
+        case SensorsFocusActionTypeCustomize:
+            actionType = @"customize";
+            break;
+        case SensorsFocusActionTypeOpenlink:
+            actionType = @"openlink";
+            break;
+        default:
+            actionType = @"unknown";
+            break;
+    }
+    properties[kSFActionKey] = @{kSFTypeKey: actionType, kSFActionValueKey: action.value ?: @"", kSFActionExtraKey: action.extra ?: [NSDictionary dictionary]};
+
+    [UniSensorsAnalyticsModule sharedModule].popupClickCallback(properties, YES);
+}
+
+//MARK: SensorsFocusCampaignDelegate
+- (void)campaignDidStart:(SFCampaign *)campaign {
+    if (![UniSensorsAnalyticsModule sharedModule].popupLoadSuccessCallback) {
+        return;
+    }
+    NSMutableDictionary *properties = [self propertiesWithCampain:campaign];
+    [UniSensorsAnalyticsModule sharedModule].popupLoadSuccessCallback([properties copy], YES);
+}
+
+- (void)campaignDidEnd:(SFCampaign *)campaign {
+    if (![UniSensorsAnalyticsModule sharedModule].popupCloseCallback) {
+        return;
+    }
+    NSMutableDictionary *properties = [self propertiesWithCampain:campaign];
+    [UniSensorsAnalyticsModule sharedModule].popupCloseCallback(properties, YES);
+}
+
+- (void)campaignFailed:(SFCampaign *)campaign error:(NSError *)error {
+    if (![UniSensorsAnalyticsModule sharedModule].popupLoadFailedCallback) {
+        return;
+    }
+    NSMutableDictionary *properties = [self propertiesWithCampain:campaign];
+    properties[kSFErrorKey] = error.localizedDescription;
+    [UniSensorsAnalyticsModule sharedModule].popupLoadFailedCallback(properties, YES);
+}
+
+- (NSMutableDictionary *)propertiesWithCampain:(SFCampaign *)campaign {
+    NSMutableDictionary *properties = [[NSMutableDictionary alloc] init];
+    properties[kSFPlanIdKey] = campaign.planID;
+    properties[kSFTypeKey] = campaign.type == SFCampaignTypePreset ? @"preset" : @"customize";
+    properties[kSFCampaignContentKey] = campaign.content;
+    return properties;
 }
 
 @end
