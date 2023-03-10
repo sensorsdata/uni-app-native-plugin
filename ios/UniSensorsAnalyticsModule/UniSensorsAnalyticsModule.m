@@ -30,7 +30,7 @@
 #endif
 #import <SensorsFocus/SensorsFocus.h>
 
-static NSString *const kSAUniPluginVersion = @"app_uniapp:0.1.0";
+static NSString *const kSAUniPluginVersion = @"app_uniapp:0.1.1";
 static NSString *const kSAUniPluginVersionKey = @"$lib_plugin_version";
 
 static NSString *kSFPlanIdKey = @"planId";
@@ -182,6 +182,15 @@ WX_EXPORT_METHOD(@selector(clearSuperProperties))
     }];
 }
 
+WX_EXPORT_METHOD_SYNC(@selector(getSuperProperties))
+- (NSDictionary *)getSuperProperties {
+    __block NSDictionary *properties;
+    [self performSelectorWithImplementation:^{
+        properties = [SensorsAnalyticsSDK.sharedInstance currentSuperProperties];
+    }];
+    return properties;
+}
+
 #pragma mark - Profile
 WX_EXPORT_METHOD(@selector(profileSet:))
 /**
@@ -258,6 +267,20 @@ WX_EXPORT_METHOD(@selector(profileDelete))
 - (void)profileDelete {
     [self performSelectorWithImplementation:^{
         [[SensorsAnalyticsSDK sharedInstance] deleteUser];
+    }];
+}
+
+WX_EXPORT_METHOD(@selector(profilePushId:pushId:))
+- (void)profilePushId:(NSString *)pushKey pushId:(NSString *)pushId {
+    [self performSelectorWithImplementation:^{
+        [SensorsAnalyticsSDK.sharedInstance profilePushKey:pushKey pushId:pushId];
+    }];
+}
+
+WX_EXPORT_METHOD(@selector(profileUnsetPushId:))
+- (void)profileUnsetPushId:(NSString *)pushKey {
+    [self performSelectorWithImplementation:^{
+        [SensorsAnalyticsSDK.sharedInstance profileUnsetPushKey:pushKey];
     }];
 }
 
@@ -544,45 +567,7 @@ WX_EXPORT_METHOD_SYNC(@selector(getLoginID))
     return loginID;
 }
 
-#pragma mark - Android Only
-WX_EXPORT_METHOD(@selector(setSessionIntervalTime:))
-/**
- * @platform Android
- *
- * 设置 App 切换到后台与下次事件的事件间隔
- * 默认值为 30*1000 毫秒
- * 若 App 在后台超过设定事件，则认为当前 Session 结束，发送 $AppEnd 事件
- *
- * @param sessionIntervalTime int Session 时长,单位毫秒 : number
- */
-- (void)setSessionIntervalTime:(NSNumber *)sessionIntervalTime {
-    //
-}
-
-WX_EXPORT_METHOD_SYNC(@selector(getSessionIntervalTime))
-/**
- * @platform Android
- *
- * 获取 App 切换到后台与下次事件的事件间隔
- * 默认值为 30*1000 毫秒
- * 若 App 在后台超过设定事件，则认为当前 Session 结束，发送 $AppEnd 事件
- *
- * @return 返回设置的 SessionIntervalTime ，默认是 30s
- */
-- (NSNumber *)getSessionIntervalTime {
-    return @30000;
-}
-
-WX_EXPORT_METHOD(@selector(enableDataCollect))
-/**
- * @platform Android
- * 开启数据采集
- */
-- (void)enableDataCollect {
-
-}
-
-#pragma mark - Phase Two
+#pragma mark - Track & Timer
 WX_EXPORT_METHOD(@selector(removeTimer:))
 - (void)removeTimer:(NSString *)eventName {
     [self performSelectorWithImplementation:^{
@@ -643,20 +628,101 @@ WX_EXPORT_METHOD(@selector(trackViewScreen:properties:))
 #pragma clang diagnostic pop
 }
 
-WX_EXPORT_METHOD_SYNC(@selector(getSuperProperties))
-- (NSDictionary *)getSuperProperties {
-    __block NSDictionary *properties;
-    [self performSelectorWithImplementation:^{
-        properties = [SensorsAnalyticsSDK.sharedInstance currentSuperProperties];
-    }];
-    return properties;
-}
-
 WX_EXPORT_METHOD(@selector(enableTrackScreenOrientation:))
 - (void)enableTrackScreenOrientation:(BOOL)enable {
     [self performSelectorWithImplementation:^{
         [SensorsAnalyticsSDK.sharedInstance enableTrackScreenOrientation:enable];
     }];
+}
+
+WX_EXPORT_METHOD(@selector(enableDeepLinkInstallSource:))
+- (void)enableDeepLinkInstallSource:(BOOL)enable {
+    // Android 方法空实现
+}
+
+WX_EXPORT_METHOD(@selector(trackDeepLinkLaunch:))
+- (void)trackDeepLinkLaunch:(NSString *)deeplinkUrl {
+    [self performSelectorWithImplementation:^{
+        [SensorsAnalyticsSDK.sharedInstance trackDeepLinkLaunchWithURL:deeplinkUrl];
+    }];
+}
+
+#pragma mark - IDMaping - 3.0
+
+WX_EXPORT_METHOD(@selector(bind: value:))
+/**
+ @abstract
+ ID-Mapping 3.0 功能下绑定业务 ID 功能
+
+ @param key 绑定业务 ID 的键名
+ @param value 绑定业务 ID 的键值
+ */
+- (void)bind:(NSString *)key value:(NSString *)value {
+    [SensorsAnalyticsSDK.sharedInstance bind:key value:value];
+}
+
+WX_EXPORT_METHOD(@selector(unbind: value:))
+/**
+ @abstract
+ ID-Mapping 3.0 功能下解绑业务 ID 功能
+
+ @param key 解绑业务 ID 的键名
+ @param value 解绑业务 ID 的键值
+ */
+
+- (void)unbind:(NSString *)key value:(NSString *)value {
+    [SensorsAnalyticsSDK.sharedInstance unbind:key value:value];
+}
+
+WX_EXPORT_METHOD(@selector(loginWithKey: loginId:))
+/**
+ ID-Mapping 3.0 登录，设置当前用户的 loginIDKey 和 loginId
+
+ ⚠️ 此接口为 ID-Mapping 3.0 特殊场景下特定接口，请咨询确认后再使用
+
+ @param key 当前用户的登录 ID key
+ @param loginId 当前用户的登录 ID
+ */
+- (void)loginWithKey:(NSString *)key loginId:(NSString *)loginId {
+    [SensorsAnalyticsSDK.sharedInstance loginWithKey:key loginId:loginId];
+}
+
+#pragma mark - Android Only
+WX_EXPORT_METHOD(@selector(setSessionIntervalTime:))
+/**
+ * @platform Android
+ *
+ * 设置 App 切换到后台与下次事件的事件间隔
+ * 默认值为 30*1000 毫秒
+ * 若 App 在后台超过设定事件，则认为当前 Session 结束，发送 $AppEnd 事件
+ *
+ * @param sessionIntervalTime int Session 时长,单位毫秒 : number
+ */
+- (void)setSessionIntervalTime:(NSNumber *)sessionIntervalTime {
+    //
+}
+
+WX_EXPORT_METHOD_SYNC(@selector(getSessionIntervalTime))
+/**
+ * @platform Android
+ *
+ * 获取 App 切换到后台与下次事件的事件间隔
+ * 默认值为 30*1000 毫秒
+ * 若 App 在后台超过设定事件，则认为当前 Session 结束，发送 $AppEnd 事件
+ *
+ * @return 返回设置的 SessionIntervalTime ，默认是 30s
+ */
+- (NSNumber *)getSessionIntervalTime {
+    return @30000;
+}
+
+WX_EXPORT_METHOD(@selector(enableDataCollect))
+/**
+ * @platform Android
+ * 开启数据采集
+ */
+- (void)enableDataCollect {
+    // Android 方法空实现
 }
 
 WX_EXPORT_METHOD(@selector(resumeTrackScreenOrientation))
@@ -671,33 +737,8 @@ WX_EXPORT_METHOD(@selector(stopTrackScreenOrientation))
 
 WX_EXPORT_METHOD_SYNC(@selector(getScreenOrientation))
 - (NSString *)getScreenOrientation {
+    /// 获取屏幕方向，iOS 不支持
     return @"";
-}
-
-WX_EXPORT_METHOD(@selector(profilePushId:pushId:))
-- (void)profilePushId:(NSString *)pushKey pushId:(NSString *)pushId {
-    [self performSelectorWithImplementation:^{
-        [SensorsAnalyticsSDK.sharedInstance profilePushKey:pushKey pushId:pushId];
-    }];
-}
-
-WX_EXPORT_METHOD(@selector(profileUnsetPushId:))
-- (void)profileUnsetPushId:(NSString *)pushKey {
-    [self performSelectorWithImplementation:^{
-        [SensorsAnalyticsSDK.sharedInstance profileUnsetPushKey:pushKey];
-    }];
-}
-
-WX_EXPORT_METHOD(@selector(enableDeepLinkInstallSource:))
-- (void)enableDeepLinkInstallSource:(BOOL)enable {
-    // Android 方法空实现
-}
-
-WX_EXPORT_METHOD(@selector(trackDeepLinkLaunch:))
-- (void)trackDeepLinkLaunch:(NSString *)deeplinkUrl {
-    [self performSelectorWithImplementation:^{
-        [SensorsAnalyticsSDK.sharedInstance trackDeepLinkLaunchWithURL:deeplinkUrl];
-    }];
 }
 
 #pragma mark - SF Related

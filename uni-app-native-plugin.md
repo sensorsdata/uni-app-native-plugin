@@ -5,26 +5,6 @@
 ### 适用范围
 本插件适用于 Android & iOS进行数据采集。
 
-
-### 平台兼容性
-
-|Android | iOS | 
- |----|----|
-|最低支持版本：4.4 |  最低支持版本： 9  | 
-
-### 原生插件通用使用流程
-1. 购买插件，选择该插件绑定的项目。
-2. 在HBuilderX里找到项目，在manifest的app原生插件配置中勾选模块，如需要填写参数则参考插件作者的文档添加。
-3. 根据插件作者的提供的文档开发代码，在代码中引用插件，调用插件功能。
-4. 打包自定义基座，选择插件，得到自定义基座，然后运行时选择自定义基座，进行log输出测试。
-5. 开发完毕后正式云打包
-
-付费原生插件目前不支持离线打包。
-Android 离线打包原生插件另见文档 https://nativesupport.dcloud.net.cn/NativePlugin/offline_package/android
-iOS 离线打包原生插件另见文档 https://nativesupport.dcloud.net.cn/NativePlugin/offline_package/ios
-
-注意事项：如果同一插件且同一appid下购买并绑定了多个包名，提交云打包界面提示包名绑定不一致时，需要在HBuilderX项目中manifest.json->“App原生插件配置”->”云端插件“列表中删除该插件重新选择
-
 ### 引入方式
 ```js
 const sensors = uni.requireNativePlugin('Sensorsdata-UniPlugin-App');
@@ -321,6 +301,45 @@ const sensors = uni.requireNativePlugin('Sensorsdata-UniPlugin-App');
 方法说明：注销，清空当前用户的登录 ID
 ```js
  sensors.logout(); 
+```
+
+### loginWithKey
+
+方法说明：登录，设置当前用户的登录 IDKey 和 loginId
+
+|参数 |类型| 说明| 是否必选 |
+|--|--|--|--|
+|loginIDKey| String| 登录 ID Key |是  |
+|loginID| String| 登录 ID | 是 |
+
+```js
+ sensors.loginWithKey("loginIDKey","loginID");
+```
+
+### bind
+
+方法说明：绑定业务 ID
+*$identity_mobile、$identity_email* 为神策定义业务 key，支持自定义 key
+
+|参数 |类型| 说明| 是否必选 |
+|--|--|--|--|
+|key| String| 业务ID Key|是  |
+|value| String| 业务 ID | 是 |
+
+```js
+ sensors.bind("$identity_mobile","187****8991");
+```
+### unbind
+
+方法说明：解绑业务 ID
+
+|参数 |类型| 说明| 是否必选 |
+|--|--|--|--|
+|key| String| 业务ID Key | 是  |
+|value| String| 业务 ID | 是 |
+
+```js
+ sensors.unbind("$identity_mobile","187****8991");
 ```
 
 ### trackAppInstall

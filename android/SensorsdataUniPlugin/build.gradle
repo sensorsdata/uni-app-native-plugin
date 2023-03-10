@@ -34,7 +34,7 @@ dependencies {
     compileOnly 'com.alibaba:fastjson:1.1.46.android'
 
     compileOnly fileTree(dir: 'libs', include: ['uniapp-v8-release.aar'])
-    compileOnly 'com.sensorsdata.analytics.android:SensorsAnalyticsSDK:6.6.0'
+    compileOnly 'com.sensorsdata.analytics.android:SensorsAnalyticsSDK:6.6.3'
     compileOnly 'com.alibaba:fastjson:1.1.46.android'
     compileOnly 'com.sensorsdata.analytics.android:SensorsFocusSDK:0.5.5'
 }

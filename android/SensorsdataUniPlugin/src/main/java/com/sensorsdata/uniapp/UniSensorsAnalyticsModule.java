@@ -39,7 +39,7 @@ import io.dcloud.feature.uniapp.common.UniDestroyableModule;
 
 public class UniSensorsAnalyticsModule extends UniDestroyableModule {
 
-    public static final String VERSION = "0.1.0";
+    public static final String VERSION = "0.1.1";
 
     private static final String MODULE_NAME = "UniSensorsAnalyticsModule";
     public static final String LOG_TAG = "SA.UniModule";
@@ -805,6 +805,33 @@ public class UniSensorsAnalyticsModule extends UniDestroyableModule {
             Log.i(LOG_TAG, "SensorsFocus SDK init success!");
         } catch (Exception ignored) {
             Log.i(LOG_TAG, "SensorsFocus SDK init failed!");
+        }
+    }
+
+    @UniJSMethod
+    public void bind(String key, String value) {
+        try {
+            SensorsDataAPI.sharedInstance().bind(key, value);
+        } catch (Exception e) {
+            Log.i(LOG_TAG, e.getMessage());
+        }
+    }
+
+    @UniJSMethod
+    public void unbind(String key, String value) {
+        try {
+            SensorsDataAPI.sharedInstance().unbind(key, value);
+        } catch (Exception e) {
+            Log.i(LOG_TAG, e.getMessage());
+        }
+    }
+
+    @UniJSMethod
+    public void loginWithKey(String loginIDKey, String loginId, JSONObject properties) {
+        try {
+            SensorsDataAPI.sharedInstance().loginWithKey(loginIDKey, loginId, JSONUtils.convertToJSONObject(properties));
+        } catch (Exception e) {
+            Log.i(LOG_TAG, e.getMessage());
         }
     }
 
