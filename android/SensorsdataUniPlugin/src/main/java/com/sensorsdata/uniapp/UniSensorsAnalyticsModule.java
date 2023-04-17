@@ -26,6 +26,8 @@ import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 import com.sensorsdata.analytics.android.sdk.SensorsDataAPIEmptyImplementation;
 import com.sensorsdata.sf.core.SFConfigOptions;
 import com.sensorsdata.sf.core.SensorsFocusAPI;
+import com.sensorsdata.sf.core.entity.SFCampaign;
+import com.sensorsdata.sf.ui.listener.SensorsFocusCampaignListener;
 import com.sensorsdata.uniapp.property.UniPropertyManager;
 import com.sensorsdata.uniapp.sf.UniCampaignListener;
 import com.sensorsdata.uniapp.sf.UniPopupListener;
@@ -39,7 +41,7 @@ import io.dcloud.feature.uniapp.common.UniDestroyableModule;
 
 public class UniSensorsAnalyticsModule extends UniDestroyableModule {
 
-    public static final String VERSION = "0.1.1";
+    public static final String VERSION = "0.1.2";
 
     private static final String MODULE_NAME = "UniSensorsAnalyticsModule";
     public static final String LOG_TAG = "SA.UniModule";
@@ -798,8 +800,17 @@ public class UniSensorsAnalyticsModule extends UniDestroyableModule {
                 } catch (Exception ignored) {
 
                 }
+                UniPopupListener popupListener = null;
+                try {
+                    Class<SensorsFocusCampaignListener> campaignClass = SensorsFocusCampaignListener.class;
+                    campaignClass.getMethod("onCampaignClick", SFCampaign.class);
+                } catch (NoSuchMethodException e) {
+                    popupListener = new UniPopupListener();
+                } catch (Exception ignored){
+
+                }
                 SensorsFocusAPI.startWithConfigOptions(mWXSDKInstance.getContext(), sfConfigOptions
-                        .setPopupListener(new UniPopupListener())
+                        .setPopupListener(popupListener)
                         .setCampaignListener(new UniCampaignListener()));
             }
             Log.i(LOG_TAG, "SensorsFocus SDK init success!");

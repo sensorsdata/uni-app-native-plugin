@@ -19,9 +19,13 @@ package com.sensorsdata.uniapp.sf;
 
 import android.util.Log;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.sensorsdata.analytics.android.sdk.SALog;
 import com.sensorsdata.sf.core.entity.SFCampaign;
 import com.sensorsdata.sf.ui.listener.SensorsFocusCampaignListener;
+import com.sensorsdata.sf.ui.view.SensorsFocusActionModel;
+import com.sensorsdata.uniapp.util.JSONUtils;
 
 import io.dcloud.feature.uniapp.bridge.UniJSCallback;
 
@@ -62,6 +66,47 @@ public class UniCampaignListener implements SensorsFocusCampaignListener {
                 jsonObject.put("type", sfCampaign.getType().toString().toLowerCase());
                 jsonObject.put("content", sfCampaign.getContent());
                 closeJSCallback.invokeAndKeepAlive(jsonObject);
+            } catch (Exception e) {
+                Log.i(LOG_TAG, e.getMessage());
+            }
+        }
+    }
+
+    @Override
+    public void onCampaignClick(SFCampaign sfCampaign) {
+        if (clickJSCallback != null) {
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("planId", sfCampaign.getPlanId());
+                jsonObject.put("type", sfCampaign.getType());
+                jsonObject.put("content", sfCampaign.getContent());
+                SensorsFocusActionModel actionModel = sfCampaign.getAction();
+                JSONObject actionJson = new JSONObject();
+                String type = null;
+                switch (actionModel) {
+                    case OPEN_LINK:
+                        type = "openlink";
+                        break;
+                    case COPY:
+                        type = "copy";
+                        break;
+                    case CLOSE:
+                        type = "close";
+                        break;
+                    case CUSTOMIZE:
+                        type = "customize";
+                        break;
+                }
+                actionJson.put("type", type);
+                String value = actionModel.getValue();
+                if (value == null || "null".equals(value)) {
+                    actionJson.put("value", "");
+                } else {
+                    actionJson.put("value", value);
+                }
+                actionJson.put("extra", actionModel.getExtra() == null ? new JSONObject() : JSONUtils.convertToFastJson(actionModel.getExtra()));
+                jsonObject.put("action", actionJson);
+                UniCampaignListener.clickJSCallback.invokeAndKeepAlive(jsonObject);
             } catch (Exception e) {
                 Log.i(LOG_TAG, e.getMessage());
             }

@@ -165,6 +165,7 @@ const sensors = uni.requireNativePlugin('Sensorsdata-UniPlugin-App');
 ### enableLog
 
 方法说明：设置是否开启 log
+
 |参数 |类型 |说明 |是否必选|
 |--|--|--|--|
 |enable| boolean| 是否开启日志址 |是|
@@ -183,6 +184,7 @@ const sensors = uni.requireNativePlugin('Sensorsdata-UniPlugin-App');
 
 ### setFlushInterval
 方法说明：设置两次数据发送的最小时间间隔，单位毫秒
+
 |参数 |类型 |说明 |是否必选|
 |--|--|--|--|
 |interval| number| 是否开启日志址 |是|
@@ -202,6 +204,7 @@ const sensors = uni.requireNativePlugin('Sensorsdata-UniPlugin-App');
 
 ### setFlushBulkSize
 方法说明：设置本地缓存日志的最大条目数，最小 50 条， 默认 100 条。
+
 |参数 |类型 |说明 |是否必选|
 |--|--|--|--|
 |bulkSize| number| 是否开启日志址 |是|
@@ -220,6 +223,7 @@ const sensors = uni.requireNativePlugin('Sensorsdata-UniPlugin-App');
 
 ### setSessionIntervalTime
 方法说明：设置 App 切换到后台与下次事件的时间间隔，默认值为 30*1000 毫秒， 若 App 在后台超过设定事件，则认为当前 Session 结束，发送 $AppEnd 事件
+
 |参数 |类型 |说明 |是否必选|
 |--|--|--|--|
 |session| number| Session 时长，仅 Android 有效 |是|
@@ -236,6 +240,7 @@ const sensors = uni.requireNativePlugin('Sensorsdata-UniPlugin-App');
 ```
 ### setFlushNetworkPolicy
 方法说明：设置 flush 时网络发送策略，默认 3G、4G、WI-FI、5G 环境下都会尝试 flush
+
 |参数 |类型 |说明 |是否必选|
 |--|--|--|--|
 |networkType| number| 网络类型NONE = 0 2G = 1 3G = 1 << 1（2） 4G = 1 << 2（4） WIFI = 1 << 3（8） 5G = 1 << 4（16） ALL = 0xFF（255） |是|
@@ -388,6 +393,7 @@ const sensors = uni.requireNativePlugin('Sensorsdata-UniPlugin-App');
 ###  clearSuperProperties
 
 方法说明：删除事件公共属性
+
 ```js
  sensors.clearSuperProperties(); 
 ```
@@ -395,6 +401,7 @@ const sensors = uni.requireNativePlugin('Sensorsdata-UniPlugin-App');
 ###  getSuperProperties
 
 方法说明：获取事件公共属性
+
 ```js
  var superProperties = sensors.getSuperProperties(); 
 ```
@@ -463,6 +470,7 @@ const sensors = uni.requireNativePlugin('Sensorsdata-UniPlugin-App');
 ### profilePushId
 
 方法说明：设置用户推送 ID
+
 |参数 |类型| 说明| 是否必选 |
 |--|--|--|--|
 |pushKey| string| 属性名 | 是|
@@ -476,6 +484,7 @@ const sensors = uni.requireNativePlugin('Sensorsdata-UniPlugin-App');
 ### profileUnsetPushId
 
 方法说明：删除用户设置的推送 ID
+
 |参数 |类型| 说明| 是否必选 |
 |--|--|--|--|
 |pushKey| string| 用户表属性名称| 是|
@@ -528,6 +537,7 @@ const sensors = uni.requireNativePlugin('Sensorsdata-UniPlugin-App');
 ### trackDeepLinkLaunch
 
 方法说明：Deeplink 唤起事件
+
 |参数 |类型| 说明| 是否必选 |
 |--|--|--|--|
 |deepLinkUrl| string| DeepLink 唤起链接| 是|
@@ -540,6 +550,7 @@ const sensors = uni.requireNativePlugin('Sensorsdata-UniPlugin-App');
 ### enableDeepLinkInstallSource
 
 方法说明：DeepLink 是否采集设备信息
+
 |参数 |类型| 说明| 是否必选 |
 |--|--|--|--|
 |enable| boolean| DeepLink 是否采集设备信息,默认 false| 是|
@@ -549,6 +560,7 @@ const sensors = uni.requireNativePlugin('Sensorsdata-UniPlugin-App');
 
 ### popupInit
 方法说明：弹窗 SDK 初始化，需在 initSDK 之后调用
+
 ```js
 sensors.popupInit({
     // SFO 在线服务地址，由 SF 后端提供
@@ -559,6 +571,7 @@ sensors.popupInit({
 
 ### 弹窗回调
 方法说明：处理弹窗的各回调接口,需在弹窗 SDK 初始化后调用
+
 |回调名称 | 说明|
 |--|--|
 |popupLoadSuccess| 弹窗展示成功时的回调|
