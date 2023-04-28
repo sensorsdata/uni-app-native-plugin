@@ -35,7 +35,7 @@ dependencies {
 
     compileOnly fileTree(dir: 'libs', include: ['uniapp-v8-release.aar'])
 //    compileOnly fileTree(dir: 'libs', include: ['SensorsFocusSDK.aar'])
-    compileOnly 'com.sensorsdata.analytics.android:SensorsAnalyticsSDK:6.6.6'
+    compileOnly 'com.sensorsdata.analytics.android:SensorsAnalyticsSDK:6.6.7'
     compileOnly 'com.alibaba:fastjson:1.1.46.android'
     //SF Android SDK 点击回调优化发版后需要修改为该版本
     compileOnly 'com.sensorsdata.analytics.android:SensorsFocusSDK:0.6.3'

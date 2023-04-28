@@ -30,7 +30,7 @@
 #endif
 #import <SensorsFocus/SensorsFocus.h>
 
-static NSString *const kSAUniPluginVersion = @"app_uniapp:0.1.2";
+static NSString *const kSAUniPluginVersion = @"app_uniapp:0.1.3";
 static NSString *const kSAUniPluginVersionKey = @"$lib_plugin_version";
 
 static NSString *kSFPlanIdKey = @"planId";
@@ -421,6 +421,7 @@ WX_EXPORT_METHOD(@selector(initSDK:))
 /*
  server_url:’数据接收地址‘,
  show_log:true,//是否开启日志
+ global_properties: {global_test: 'xxx'}, // 设置全局属性，和公共属性优先级相同，后注册的覆盖前面的
  app:{
      remote_config_url:""
      flush_interval:1000,
@@ -466,10 +467,17 @@ WX_EXPORT_METHOD(@selector(initSDK:))
         configOptions.enableLog = [enableLog boolValue];
     }
 
+    // 解析全局属性
+    NSDictionary *globalProperties = config[@"global_properties"];
+
     /********  App 特有配置解析  ********/
     NSDictionary *appConfig = config[@"app"];
     if (![appConfig isKindOfClass:[NSDictionary class]]) {
         [SensorsAnalyticsSDK startWithConfigOptions:configOptions];
+
+        if ([globalProperties isKindOfClass:NSDictionary.class]) {
+            [SensorsAnalyticsSDK.sharedInstance registerSuperProperties:globalProperties];
+        }
         return;
     }
 
@@ -521,6 +529,9 @@ WX_EXPORT_METHOD(@selector(initSDK:))
 
     // 开启 SDK
     [SensorsAnalyticsSDK startWithConfigOptions:configOptions];
+    if ([globalProperties isKindOfClass:NSDictionary.class]) {
+        [SensorsAnalyticsSDK.sharedInstance registerSuperProperties:globalProperties];
+    }
 }
 
 #pragma mark - SDK IDS

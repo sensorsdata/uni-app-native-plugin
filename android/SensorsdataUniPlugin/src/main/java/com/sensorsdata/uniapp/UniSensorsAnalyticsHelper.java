@@ -9,8 +9,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.sensorsdata.analytics.android.sdk.SAConfigOptions;
 import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 import com.sensorsdata.uniapp.property.PluginVersionInterceptor;
+import com.sensorsdata.uniapp.property.UniSAGlobalPropertyPlugin;
 import com.sensorsdata.uniapp.property.UniPropertyManager;
 import com.sensorsdata.uniapp.util.JSONUtils;
+import com.sensorsdata.uniapp.util.VersionUtils;
 
 public class UniSensorsAnalyticsHelper {
 
@@ -23,6 +25,10 @@ public class UniSensorsAnalyticsHelper {
                 String serverUrl = jsonConfig.getString("server_url");
                 configOptions = new SAConfigOptions(serverUrl);
                 configOptions.enableLog(JSONUtils.optObject(jsonConfig, "show_log", Boolean.class, false));
+                JSONObject globalProperties = jsonConfig.getJSONObject("global_properties");
+                if (globalProperties != null && !globalProperties.isEmpty() && VersionUtils.checkSAVersion("6.4.3")) {
+                    configOptions.registerPropertyPlugin(new UniSAGlobalPropertyPlugin(JSONUtils.convertToJSONObject(globalProperties)));
+                }
                 JSONObject appConfig = jsonConfig.getJSONObject("app");
                 if (appConfig != null) {
                     configOptions.setRemoteConfigUrl(appConfig.getString("remote_config_url"))

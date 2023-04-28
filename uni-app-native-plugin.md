@@ -26,6 +26,7 @@ const sensors = uni.requireNativePlugin('Sensorsdata-UniPlugin-App');
     sensors.initSDK({
         server_url:'数据接收地址',
         show_log:false,//是否开启日志
+        global_properties:{},//全局属性，object 类型
         app:{// Android & iOS 初始化配置
             remote_config_url:"",
             flush_interval:15000,//两次数据发送的最小时间间隔，单位毫秒

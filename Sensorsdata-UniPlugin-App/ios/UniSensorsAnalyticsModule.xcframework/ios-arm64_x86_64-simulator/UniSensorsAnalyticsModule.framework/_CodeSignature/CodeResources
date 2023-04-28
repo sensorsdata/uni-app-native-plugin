@@ -6,11 +6,11 @@
 	<dict>
 		<key>Frameworks/SensorsAnalyticsSDK.framework/Info.plist</key>
 		<data>
-		SMPoo8X4B6BWpf2ABXxho59cnzE=
+		8rPms2THPXe29JHWqNt9fdR1jlo=
 		</data>
 		<key>Frameworks/SensorsAnalyticsSDK.framework/SensorsAnalyticsSDK</key>
 		<data>
-		xAuhmZhf5nJx6GfhXTNO31Y8Lxc=
+		8Hh6CfiGi0NEXtwSwxvVZdZ//xs=
 		</data>
 		<key>Frameworks/SensorsAnalyticsSDK.framework/SensorsAnalyticsSDK.bundle/zh-Hans.lproj/Localizable.strings</key>
 		<dict>
@@ -23,7 +23,7 @@
 		</dict>
 		<key>Frameworks/SensorsAnalyticsSDK.framework/_CodeSignature/CodeResources</key>
 		<data>
-		1DkxgpB/cytDMpmA7qdmHDMNvus=
+		85q58b4BLq9c8NEM/4XlK2i9bag=
 		</data>
 		<key>Frameworks/SensorsFocus.framework/Info.plist</key>
 		<data>
@@ -31,7 +31,7 @@
 		</data>
 		<key>Frameworks/SensorsFocus.framework/SensorsFocus</key>
 		<data>
-		wdg5L6y0kPYO6hzm2ntjtPcKjoU=
+		yDAasR2S5z5P2eEftYPqJatKgjs=
 		</data>
 		<key>Frameworks/SensorsFocus.framework/SensorsFocus.bundle/close.png</key>
 		<data>
@@ -41,25 +41,9 @@
 		<data>
 		LFhTF6A3YgKRMUwPTV7E/xMIaIQ=
 		</data>
-		<key>Frameworks/SensorsFocus.framework/_CodeSignature/CodeDirectory</key>
-		<data>
-		vQ3jFeXJIIWFeuLB1dLSlb4jUxI=
-		</data>
-		<key>Frameworks/SensorsFocus.framework/_CodeSignature/CodeRequirements</key>
-		<data>
-		OnX22wWFKRSOFN1+obRynMCeyXM=
-		</data>
-		<key>Frameworks/SensorsFocus.framework/_CodeSignature/CodeRequirements-1</key>
-		<data>
-		LqtAk9jykKWS/zXohd9bywHvJPs=
-		</data>
 		<key>Frameworks/SensorsFocus.framework/_CodeSignature/CodeResources</key>
 		<data>
 		AXrm5xsMtBOQNwRQq6NwLXQi66Y=
-		</data>
-		<key>Frameworks/SensorsFocus.framework/_CodeSignature/CodeSignature</key>
-		<data>
-		2jmj7l5rSw0yVb/vlWAYkK/YBwk=
 		</data>
 		<key>Info.plist</key>
 		<data>
@@ -76,22 +60,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			SMPoo8X4B6BWpf2ABXxho59cnzE=
+			8rPms2THPXe29JHWqNt9fdR1jlo=
 			</data>
 			<key>hash2</key>
 			<data>
-			7P4xfn6q4HJP/ZMtEhKlESAmWZhCsyreDmsAZZfvENQ=
+			TlS6ywvgAaXJb8yAEO/JldxxeUpa//rS8dyV3R3Mf6Q=
 			</data>
 		</dict>
 		<key>Frameworks/SensorsAnalyticsSDK.framework/SensorsAnalyticsSDK</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			xAuhmZhf5nJx6GfhXTNO31Y8Lxc=
+			8Hh6CfiGi0NEXtwSwxvVZdZ//xs=
 			</data>
 			<key>hash2</key>
 			<data>
-			CEfazllKmfvZXzHyPJOVmpLvZC/2CWVqSl4L6tYU42g=
+			uYDdXbtfnhgOiRn5bWKfNQW5/dqhNQ/9JQRMxhFrWF4=
 			</data>
 		</dict>
 		<key>Frameworks/SensorsAnalyticsSDK.framework/SensorsAnalyticsSDK.bundle/zh-Hans.lproj/Localizable.strings</key>
@@ -111,11 +95,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			1DkxgpB/cytDMpmA7qdmHDMNvus=
+			85q58b4BLq9c8NEM/4XlK2i9bag=
 			</data>
 			<key>hash2</key>
 			<data>
-			wgYnKfMafkggTbfl+bY/6Wc5A9R7CPBT7LlzlRpl+qQ=
+			GxXHqpVr7mplDYCRNjpmHjLOajPn0BgeWIpl6kiakGk=
 			</data>
 		</dict>
 		<key>Frameworks/SensorsFocus.framework/Info.plist</key>
@@ -133,11 +117,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			wdg5L6y0kPYO6hzm2ntjtPcKjoU=
+			yDAasR2S5z5P2eEftYPqJatKgjs=
 			</data>
 			<key>hash2</key>
 			<data>
-			xZgVFE4KxjqSfFWzs4zGMIjeYYsxAp0YUZJxiOkabWU=
+			x7z2jTrhqRMpIqszB526Iwc6+7vmjwulIuD2rZZcfYw=
 			</data>
 		</dict>
 		<key>Frameworks/SensorsFocus.framework/SensorsFocus.bundle/close.png</key>
@@ -162,39 +146,6 @@
 			iwZ5I6TucQkxqLBCvM7LRCbuXozncNZuLrTrXZpoPAs=
 			</data>
 		</dict>
-		<key>Frameworks/SensorsFocus.framework/_CodeSignature/CodeDirectory</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			vQ3jFeXJIIWFeuLB1dLSlb4jUxI=
-			</data>
-			<key>hash2</key>
-			<data>
-			6fj2uAHcrStLb6C4Oe13gIBSL2+nt0QOOqxT94wUGm0=
-			</data>
-		</dict>
-		<key>Frameworks/SensorsFocus.framework/_CodeSignature/CodeRequirements</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			OnX22wWFKRSOFN1+obRynMCeyXM=
-			</data>
-			<key>hash2</key>
-			<data>
-			mHkgkE6rZQ51eIwFSqCwUk5qgL/HGqMt+NI3phdD+YY=
-			</data>
-		</dict>
-		<key>Frameworks/SensorsFocus.framework/_CodeSignature/CodeRequirements-1</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			LqtAk9jykKWS/zXohd9bywHvJPs=
-			</data>
-			<key>hash2</key>
-			<data>
-			ikQD2mIC1KE4dJj+jA3EMmKtzQgLg4NYjONd3puQbPU=
-			</data>
-		</dict>
 		<key>Frameworks/SensorsFocus.framework/_CodeSignature/CodeResources</key>
 		<dict>
 			<key>hash</key>
@@ -204,17 +155,6 @@
 			<key>hash2</key>
 			<data>
 			nD3PcDz2+2BpjjUM6kGSQ4JPXvGkDT5XcWTCpq31fz4=
-			</data>
-		</dict>
-		<key>Frameworks/SensorsFocus.framework/_CodeSignature/CodeSignature</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			2jmj7l5rSw0yVb/vlWAYkK/YBwk=
-			</data>
-			<key>hash2</key>
-			<data>
-			47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
