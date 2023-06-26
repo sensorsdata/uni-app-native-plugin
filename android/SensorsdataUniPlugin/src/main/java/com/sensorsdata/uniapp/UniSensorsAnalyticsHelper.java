@@ -39,6 +39,9 @@ public class UniSensorsAnalyticsHelper {
                             .enableAutoAddChannelCallbackEvent(appConfig.getBooleanValue("add_channel_callback_event"))
                             .enableEncrypt(appConfig.getBooleanValue("encrypt"));
                     boolean enableJavaScriptBridge = appConfig.getBooleanValue("javascript_bridge");
+                    if (JSONUtils.optObject(appConfig, "track_crash", Boolean.class, false)) {
+                        configOptions.enableTrackAppCrash();
+                    }
                     JSONObject androidConfig = appConfig.getJSONObject("android");
                     if (androidConfig != null) {
                         session = JSONUtils.optObject(androidConfig, "session_interval_time", Integer.class, 30000);

@@ -22,15 +22,11 @@
 		</data>
 		<key>Headers/SAConfigOptions+Encrypt.h</key>
 		<data>
-		d9aaQOYdnnmvx9/0aeBxPfEhAcU=
+		mtwKcE22hbER/1cY573HnAqMd3k=
 		</data>
 		<key>Headers/SAConfigOptions+Exception.h</key>
 		<data>
 		drqUvjNuIRJkoaAMVIvRoT67DbY=
-		</data>
-		<key>Headers/SAConfigOptions+Exposure.h</key>
-		<data>
-		C6WxW498CDMWhgQQ+awTJApvqW8=
 		</data>
 		<key>Headers/SAConfigOptions+RemoteConfig.h</key>
 		<data>
@@ -38,7 +34,7 @@
 		</data>
 		<key>Headers/SAConfigOptions.h</key>
 		<data>
-		otpj5vuIv7O9lbhoFp2uu727aXk=
+		oVgLmUXHh0jH89+XZKs4tuRIQ9g=
 		</data>
 		<key>Headers/SAConstants.h</key>
 		<data>
@@ -47,14 +43,6 @@
 		<key>Headers/SAEncryptProtocol.h</key>
 		<data>
 		NsHV6ON8xxppOjVTnPl6waatu14=
-		</data>
-		<key>Headers/SAExposureConfig.h</key>
-		<data>
-		FoP38rYPEPiJ+GY2m7/CZyGvfSY=
-		</data>
-		<key>Headers/SAExposureData.h</key>
-		<data>
-		MfDd4dAHswflipZIU5NeCCiVaWY=
 		</data>
 		<key>Headers/SAPropertyPlugin.h</key>
 		<data>
@@ -92,10 +80,6 @@
 		<data>
 		zqKvtw9RexJInHtxwX0PzRPw/Vw=
 		</data>
-		<key>Headers/SensorsAnalyticsSDK+Exposure.h</key>
-		<data>
-		NvImJORSonZnGFiDemFmbfGdYMk=
-		</data>
 		<key>Headers/SensorsAnalyticsSDK+JavaScriptBridge.h</key>
 		<data>
 		kyc+el+Gb7Rna8bfDJiCBeRUvcw=
@@ -106,7 +90,7 @@
 		</data>
 		<key>Headers/SensorsAnalyticsSDK+Public.h</key>
 		<data>
-		erz3JPhfLHpI7Aa8i2yFDfOSuAc=
+		zqQeHb0QHnxjAseERiG62zPO+0g=
 		</data>
 		<key>Headers/SensorsAnalyticsSDK+SAAppExtension.h</key>
 		<data>
@@ -114,7 +98,7 @@
 		</data>
 		<key>Headers/SensorsAnalyticsSDK+SAAutoTrack.h</key>
 		<data>
-		IHQ8B5TW8RWOciddJUkxIZykh6s=
+		bV3DyJBU1xmgUv+KWtlVkJq1+Nc=
 		</data>
 		<key>Headers/SensorsAnalyticsSDK+SAChannelMatch.h</key>
 		<data>
@@ -128,31 +112,18 @@
 		<data>
 		norFjdHx6b7AEKoLxBC25t0Pv48=
 		</data>
-		<key>Headers/UIView+ExposureIdentifier.h</key>
-		<data>
-		tN4eNh7P6V3LxdghDyE+AZqyMfk=
-		</data>
 		<key>Headers/UIView+SensorsAnalytics.h</key>
 		<data>
-		Z8Eh5k0BNE2uaqStbhI/tzeJ9Ug=
+		FNesTpomtl8JzEMxSpT9EXR++pk=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		SMPoo8X4B6BWpf2ABXxho59cnzE=
+		1M0iGcF3lAh4KH783/Z0Cg1W/hA=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
 		zsWTmmZeTiVXahmbX4Z0uElOt8w=
 		</data>
-		<key>SensorsAnalyticsSDK.bundle/zh-Hans.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			/ERQOnUaQIk2/sLoOiyPNunvZBU=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
 	</dict>
 	<key>files2</key>
 	<dict>
@@ -204,11 +175,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			d9aaQOYdnnmvx9/0aeBxPfEhAcU=
+			mtwKcE22hbER/1cY573HnAqMd3k=
 			</data>
 			<key>hash2</key>
 			<data>
-			J/qDzBqKKmvMwl9lYuygrxQnKGp//PPehaKXxtMsPcY=
+			V0BVc+en/LHFV2T1m4IFVAf9WIZUuHze/ntXxqi6JM4=
 			</data>
 		</dict>
 		<key>Headers/SAConfigOptions+Exception.h</key>
@@ -220,17 +191,6 @@
 			<key>hash2</key>
 			<data>
 			CQfuDW9SvDTTAR6lyAdu3wogvAOtJ7qhbBzLty+wTyU=
-			</data>
-		</dict>
-		<key>Headers/SAConfigOptions+Exposure.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			C6WxW498CDMWhgQQ+awTJApvqW8=
-			</data>
-			<key>hash2</key>
-			<data>
-			UZbWj6ITw6KV5kwUXrP1zC3zBuBvkyLizzyeSeRiadw=
 			</data>
 		</dict>
 		<key>Headers/SAConfigOptions+RemoteConfig.h</key>
@@ -248,11 +208,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			otpj5vuIv7O9lbhoFp2uu727aXk=
+			oVgLmUXHh0jH89+XZKs4tuRIQ9g=
 			</data>
 			<key>hash2</key>
 			<data>
-			l5B5BMJDEvSaFS695Dkeml2e11S2l+aI8QicplbbS7w=
+			y+1SgPKEPBD+ZS5PbMJocx6wdUUpPjyOPV026bT7L/g=
 			</data>
 		</dict>
 		<key>Headers/SAConstants.h</key>
@@ -275,28 +235,6 @@
 			<key>hash2</key>
 			<data>
 			w/NFJqRixBuCHS2BgO0CqWcl+U2o8Uzk5NlwHZsPubM=
-			</data>
-		</dict>
-		<key>Headers/SAExposureConfig.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			FoP38rYPEPiJ+GY2m7/CZyGvfSY=
-			</data>
-			<key>hash2</key>
-			<data>
-			QD+Nukd/qIZnD4nltOUAUGZ3Mm4VnBxmpIxlN/ww2Vo=
-			</data>
-		</dict>
-		<key>Headers/SAExposureData.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			MfDd4dAHswflipZIU5NeCCiVaWY=
-			</data>
-			<key>hash2</key>
-			<data>
-			BCi8oHMz0QZoHYluwJM+RKDk7S1y0J0D5+FU9SZczSA=
 			</data>
 		</dict>
 		<key>Headers/SAPropertyPlugin.h</key>
@@ -398,17 +336,6 @@
 			Oseun4aXJuPTdu0o1HsDyLXZcDqk/zcbEBR2c5pfIEo=
 			</data>
 		</dict>
-		<key>Headers/SensorsAnalyticsSDK+Exposure.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			NvImJORSonZnGFiDemFmbfGdYMk=
-			</data>
-			<key>hash2</key>
-			<data>
-			1LvTwVt22mNkriabqch8wH1BokbGa93LYGg0cDxfWt4=
-			</data>
-		</dict>
 		<key>Headers/SensorsAnalyticsSDK+JavaScriptBridge.h</key>
 		<dict>
 			<key>hash</key>
@@ -435,11 +362,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			erz3JPhfLHpI7Aa8i2yFDfOSuAc=
+			zqQeHb0QHnxjAseERiG62zPO+0g=
 			</data>
 			<key>hash2</key>
 			<data>
-			4/uS7iH/O1mctrSC61jp8HQpNADPQgcb1mmPuRipdKc=
+			tWDlBFJMXmmPTWIgnoQt+gx53WJOfLediA+Zi8/dDjI=
 			</data>
 		</dict>
 		<key>Headers/SensorsAnalyticsSDK+SAAppExtension.h</key>
@@ -457,11 +384,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			IHQ8B5TW8RWOciddJUkxIZykh6s=
+			bV3DyJBU1xmgUv+KWtlVkJq1+Nc=
 			</data>
 			<key>hash2</key>
 			<data>
-			Y9wNDxnTN09gaTowkWszAf1U0820mVNEfFfRnqFNwmQ=
+			aBo5SIZ9AJ4NU/axvxp3woPsILH1GWM1vtOIWwP7LSY=
 			</data>
 		</dict>
 		<key>Headers/SensorsAnalyticsSDK+SAChannelMatch.h</key>
@@ -497,26 +424,15 @@
 			MyKEOUllhqgt/d0nvpxl7m8I03DB4XcTQYHxYaIV06A=
 			</data>
 		</dict>
-		<key>Headers/UIView+ExposureIdentifier.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			tN4eNh7P6V3LxdghDyE+AZqyMfk=
-			</data>
-			<key>hash2</key>
-			<data>
-			bQtKn5ONYEtRYsNhM5LjDn/W9vqvCtlObvxblaG3cIQ=
-			</data>
-		</dict>
 		<key>Headers/UIView+SensorsAnalytics.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Z8Eh5k0BNE2uaqStbhI/tzeJ9Ug=
+			FNesTpomtl8JzEMxSpT9EXR++pk=
 			</data>
 			<key>hash2</key>
 			<data>
-			NP4mtklLaa3pAzWZY6ZQ/ZxvJHSHF8sIntpyygEv0Oo=
+			DMf9xSBLFaDYrynoAKFp9GTNaqzbErzHviK8ZsRgx0s=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
@@ -529,19 +445,6 @@
 			<data>
 			bue/bgjLaTuCxJF0cEAj3KCb3auA2qHw8Fgj4A+kLrs=
 			</data>
-		</dict>
-		<key>SensorsAnalyticsSDK.bundle/zh-Hans.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			/ERQOnUaQIk2/sLoOiyPNunvZBU=
-			</data>
-			<key>hash2</key>
-			<data>
-			xLndx73CWHflIDc2v2EWdAkH7lN7REhoOOAdLFDVe9M=
-			</data>
-			<key>optional</key>
-			<true/>
 		</dict>
 	</dict>
 	<key>rules</key>

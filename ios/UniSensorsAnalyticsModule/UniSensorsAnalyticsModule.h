@@ -26,12 +26,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UniSensorsAnalyticsModule : DCUniModule <WXModuleProtocol>
 
+#if __has_include(<SensorsFocus/SensorsFocus.h>)
+
 + (instancetype)sharedModule;
 
 @property (nonatomic, strong) UniModuleKeepAliveCallback popupLoadSuccessCallback;
 @property (nonatomic, strong) UniModuleKeepAliveCallback popupCloseCallback;
 @property (nonatomic, strong) UniModuleKeepAliveCallback popupClickCallback;
 @property (nonatomic, strong) UniModuleKeepAliveCallback popupLoadFailedCallback;
+
+#endif
 
 @end
 

@@ -28,9 +28,12 @@
 #else
 #import "SensorsAnalyticsSDK.h"
 #endif
-#import <SensorsFocus/SensorsFocus.h>
 
-static NSString *const kSAUniPluginVersion = @"app_uniapp:0.1.3";
+#if __has_include(<SensorsFocus/SensorsFocus.h>)
+#import <SensorsFocus/SensorsFocus.h>
+#endif
+
+static NSString *const kSAUniPluginVersion = @"app_uniapp:0.1.4";
 static NSString *const kSAUniPluginVersionKey = @"$lib_plugin_version";
 
 static NSString *kSFPlanIdKey = @"planId";
@@ -41,8 +44,11 @@ static NSString *kSFActionKey = @"action";
 static NSString *kSFActionValueKey = @"value";
 static NSString *kSFActionExtraKey = @"extra";
 
+#if __has_include(<SensorsFocus/SensorsFocus.h>)
 @interface UniSensorsAnalyticsModule () <SensorsFocusPopupDelegate, SensorsFocusCampaignDelegate>
-
+#else
+@interface UniSensorsAnalyticsModule ()
+#endif
 @end
 
 @implementation UniSensorsAnalyticsModule
@@ -431,6 +437,7 @@ WX_EXPORT_METHOD(@selector(initSDK:))
      encrypt:true,  //是否开启加密
      add_channel_callback_event:false,//是否开启渠道事件
      javascript_bridge:true, // H5 打通功能
+    track_crash: true,  // 开启 crash 采集
      android:{
          support_jellybean:false //H5 打通是否支持 Android 16 及以下版本
          session_interval_time:15000,
@@ -520,6 +527,11 @@ WX_EXPORT_METHOD(@selector(initSDK:))
     NSNumber *enableJavascriptBridge = appConfig[@"javascript_bridge"];
     if ([enableJavascriptBridge isKindOfClass:[NSNumber class]]) {
         configOptions.enableJavaScriptBridge = [enableJavascriptBridge boolValue];
+    }
+
+    NSNumber *enableTrackAppCrash = appConfig[@"track_crash"];
+    if ([enableTrackAppCrash isKindOfClass:[NSNumber class]]) {
+        configOptions.enableTrackAppCrash = [enableTrackAppCrash boolValue];
     }
 
     NSDictionary *iOSConfigs = appConfig[@"ios"];
@@ -752,7 +764,10 @@ WX_EXPORT_METHOD_SYNC(@selector(getScreenOrientation))
     return @"";
 }
 
+
 #pragma mark - SF Related
+#if __has_include(<SensorsFocus/SensorsFocus.h>)
+
 + (instancetype)sharedModule {
     static UniSensorsAnalyticsModule *sharedInstance = nil;
     static dispatch_once_t onceToken;
@@ -874,5 +889,7 @@ UNI_EXPORT_METHOD(@selector(popupInit:))
     properties[kSFCampaignContentKey] = campaign.content;
     return properties;
 }
+
+#endif
 
 @end

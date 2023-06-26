@@ -28,7 +28,11 @@
 #else
 #import "SensorsAnalyticsSDK.h"
 #endif
+
+#if __has_include(<SensorsFocus/SensorsFocus.h>)
 #import <SensorsFocus/SensorsFocus.h>
+#endif
+
 #import "UniSensorsAnalyticsModule.h"
 
 @interface UniSensorsAnalyticsProxy ()
@@ -129,9 +133,12 @@
 
 
 - (BOOL)handleSchemeUrl:(NSURL *)url {
+#if __has_include(<SensorsFocus/SensorsFocus.h>)
     if ([SensorsFocus handleOpenURL:url]) {
         return YES;
     }
+#endif
+    
     return [[SensorsAnalyticsSDK sharedInstance] handleSchemeUrl:url];
 }
 

@@ -34,6 +34,7 @@ const sensors = uni.requireNativePlugin('Sensorsdata-UniPlugin-App');
             flush_network_policy:30, //设置 flush 时网络发送策略
             auto_track:0,  // 1 应用启动， 2 应用退出，3 应用启动和退出 默认 0
             encrypt:false,  //是否开启加密
+            track_crash:false, // 是否采集 AppCrash 事件
             add_channel_callback_event:false,//是否开启渠道事件
             javascript_bridge:false, // WebView 打通功能
             android:{//Android 特有配置

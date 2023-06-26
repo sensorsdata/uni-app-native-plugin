@@ -1,7 +1,7 @@
 {
   "name": "Sensorsdata-UniPlugin-App",
   "id": "Sensorsdata-UniPlugin-App",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "插件描述信息",
   "_dp_type": "nativeplugin",
   "_dp_nativeplugin": {
@@ -21,7 +21,7 @@
         "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>"
       ],
       "dependencies": [
-        "com.sensorsdata.analytics.android:SensorsAnalyticsSDK:6.6.7",
+        "com.sensorsdata.analytics.android:SensorsAnalyticsSDK:6.7.0",
         "com.sensorsdata.analytics.android:SensorsFocusSDK:0.6.3"
       ],
       "parameters": {

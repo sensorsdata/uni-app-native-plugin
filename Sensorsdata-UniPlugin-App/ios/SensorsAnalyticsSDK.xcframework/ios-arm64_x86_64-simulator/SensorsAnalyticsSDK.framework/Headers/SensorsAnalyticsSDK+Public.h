@@ -333,28 +333,6 @@ extern NSString * const SensorsAnalyticsIdentityKeyEmail;
 
 /**
  * @abstract
- * 获取 LastScreenUrl
- *
- * @return LastScreenUrl
- */
-- (NSString *)getLastScreenUrl API_UNAVAILABLE(macos);
-
-/**
- * @abstract
- * App 退出或进到后台时清空 referrer，默认情况下不清空
- */
-- (void)clearReferrerWhenAppEnd API_UNAVAILABLE(macos);
-
-/**
- * @abstract
- * 获取 LastScreenTrackProperties
- *
- * @return LastScreenTrackProperties
- */
-- (NSDictionary *)getLastScreenTrackProperties API_UNAVAILABLE(macos);
-
-/**
- * @abstract
  * 修改入库之前的事件属性
  *
  * @param callback 传入事件名称和事件属性，可以修改或删除事件属性。请返回一个 BOOL 值，true 表示事件将入库， false 表示事件将被抛弃
@@ -427,6 +405,14 @@ extern NSString * const SensorsAnalyticsIdentityKeyEmail;
  * @param plugin 属性插件对象
  */
 - (void)registerPropertyPlugin:(SAPropertyPlugin *)plugin;
+
+/**
+ * @abstract
+ * 注销属性插件
+ *
+ * @param pluginClass 插件类型
+ */
+- (void)unregisterPropertyPluginWithPluginClass:(Class)pluginClass;
 
 /**
  * @abstract
@@ -657,7 +643,7 @@ extern NSString * const SensorsAnalyticsIdentityKeyEmail;
  * 1. 是否 WIFI/3G/4G 网络
  * 2. 是否满足以下数据发送条件之一:
  *   1) 与上次发送的时间间隔是否大于 flushInterval
- *   2) 本地缓存日志数目是否达到 flushBulkSize
+ *   2) 本地缓存日志数目是否超过 flushBulkSize
  * 如果满足这两个条件之一，则向服务器发送一次数据；如果都不满足，则把数据加入到队列中，等待下次检查时把整个队列的内容一并发送。
  * 需要注意的是，为了避免占用过多存储，队列最多只缓存10000条数据。
  */
@@ -667,14 +653,14 @@ extern NSString * const SensorsAnalyticsIdentityKeyEmail;
  * @property
  *
  * @abstract
- * 本地缓存的最大事件数目，当累积日志量达到阈值时发送数据
+ * 本地缓存的最大事件数目，当累积日志量超过阈值时发送数据
  *
  * @discussion
  * 默认值为 100，在每次调用 track 和 profileSet 等接口的时候，都会检查如下条件，以判断是否向服务器上传数据:
  * 1. 是否 WIFI/3G/4G 网络
  * 2. 是否满足以下数据发送条件之一:
  *   1) 与上次发送的时间间隔是否大于 flushInterval
- *   2) 本地缓存日志数目是否达到 flushBulkSize
+ *   2) 本地缓存日志数目是否超过 flushBulkSize
  * 如果同时满足这两个条件，则向服务器发送一次数据；如果不满足，则把数据加入到队列中，等待下次检查时把整个队列的内容一并发送。
  * 需要注意的是，为了避免占用过多存储，队列最多只缓存 10000 条数据。
  */
