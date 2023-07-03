@@ -1,7 +1,7 @@
 {
   "name": "Sensorsdata-UniPlugin-App",
   "id": "Sensorsdata-UniPlugin-App",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "插件描述信息",
   "_dp_type": "nativeplugin",
   "_dp_nativeplugin": {
