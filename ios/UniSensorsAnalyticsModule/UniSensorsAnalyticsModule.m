@@ -33,7 +33,7 @@
 #import <SensorsFocus/SensorsFocus.h>
 #endif
 
-static NSString *const kSAUniPluginVersion = @"app_uniapp:0.1.5";
+static NSString *const kSAUniPluginVersion = @"app_uniapp:0.1.6";
 static NSString *const kSAUniPluginVersionKey = @"$lib_plugin_version";
 
 static NSString *kSFPlanIdKey = @"planId";
