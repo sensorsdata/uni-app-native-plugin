@@ -41,7 +41,7 @@ import io.dcloud.feature.uniapp.common.UniDestroyableModule;
 
 public class UniSensorsAnalyticsModule extends UniDestroyableModule {
 
-    public static final String VERSION = "0.1.6";
+    public static final String VERSION = "0.1.7";
 
     private static final String MODULE_NAME = "UniSensorsAnalyticsModule";
     public static final String LOG_TAG = "SA.UniModule";
@@ -845,6 +845,25 @@ public class UniSensorsAnalyticsModule extends UniDestroyableModule {
             Log.i(LOG_TAG, e.getMessage());
         }
     }
+	
+	@UniJSMethod
+	public void resetAnonymousIdentity(String anonymousId) {
+		try {
+		    SensorsDataAPI.sharedInstance().resetAnonymousIdentity(anonymousId);
+		} catch (Exception e) {
+		    Log.i(LOG_TAG, e.getMessage());
+		}
+	}
+	
+	@UniJSMethod(uiThread = false)
+	public JSONObject getIdentities() {
+		try {
+		    return JSONUtils.convertToFastJson(SensorsDataAPI.sharedInstance().getIdentities());
+		} catch (Exception e) {
+		    Log.i(LOG_TAG, e.getMessage());
+		}
+		return null;
+	}
 
     @Override
     public void destroy() {

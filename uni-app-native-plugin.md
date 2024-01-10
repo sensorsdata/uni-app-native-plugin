@@ -180,6 +180,7 @@ const sensors = uni.requireNativePlugin('Sensorsdata-UniPlugin-App');
 
 方法说明：返回预置属性
 返回类型：object
+
 ```js
  var presetProperties = sensors.getPresetProperties(true)
 ```
@@ -347,6 +348,28 @@ const sensors = uni.requireNativePlugin('Sensorsdata-UniPlugin-App');
 
 ```js
  sensors.unbind("$identity_mobile","187****8991");
+```
+
+### getIdentities
+
+方法说明：获取已绑定的业务 ID 列表
+
+返回类型：object
+
+```js
+ var identities = sensors.getIdentities();
+```
+
+### resetAnonymousIdentity
+
+方法说明： ID-Mapping 3.0 重置匿名 ID，只有在未登录情况下可以使用。
+
+| 参数     | 类型   | 说明           | 是否必选 |
+| -------- | ------ | -------------- | -------- |
+| identity | String | 新的匿名 Id 值 | 否       |
+
+```js
+ sensors.resetAnonymousIdentity("identity"); 
 ```
 
 ### trackAppInstall

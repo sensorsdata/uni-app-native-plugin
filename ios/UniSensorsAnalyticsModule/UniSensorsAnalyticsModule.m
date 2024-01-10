@@ -33,7 +33,7 @@
 #import <SensorsFocus/SensorsFocus.h>
 #endif
 
-static NSString *const kSAUniPluginVersion = @"app_uniapp:0.1.6";
+static NSString *const kSAUniPluginVersion = @"app_uniapp:0.1.7";
 static NSString *const kSAUniPluginVersionKey = @"$lib_plugin_version";
 
 static NSString *kSFPlanIdKey = @"planId";
@@ -709,6 +709,32 @@ WX_EXPORT_METHOD(@selector(loginWithKey: loginId:))
 - (void)loginWithKey:(NSString *)key loginId:(NSString *)loginId {
     [SensorsAnalyticsSDK.sharedInstance loginWithKey:key loginId:loginId];
 }
+
+WX_EXPORT_METHOD_SYNC(@selector(getIdentities))
+/**
+ 获取 ID-Mapping 3.0 功能下已绑定的业务 ID 列表
+
+ @return 返回业务 ID 信息
+ */
+- (NSDictionary *)getIdentities {
+    __block NSDictionary *identities = nil;
+    [self performSelectorWithImplementation:^{
+        identities = [SensorsAnalyticsSDK.sharedInstance identities];
+    }];
+    return identities;
+
+}
+
+WX_EXPORT_METHOD(@selector(resetAnonymousIdentity:))
+/**
+ ID-Mapping 3.0 重置匿名 ID
+
+ @param identity 重置的 anonymousId 新值，可以为 nil
+ */
+- (void)resetAnonymousIdentity:(NSString *)identity {
+    [SensorsAnalyticsSDK.sharedInstance resetAnonymousIdentity:identity];
+}
+
 
 #pragma mark - Android Only
 WX_EXPORT_METHOD(@selector(setSessionIntervalTime:))
