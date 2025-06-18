@@ -1,7 +1,11 @@
-[![神策数据](https://opensource.sensorsdata.cn/wp-content/uploads/logo.png "神策数据")](https://www.sensorsdata.cn/)
-<br><br>
-[![License](https://img.shields.io/github/license/sensorsdata/sa-sdk-android.svg)](https://github.com/sensorsdata/sa-sdk-android/blob/master/LICENSE)
+<img src="https://ow-file.sensorsdata.cn/www/home/header/sensors_header_icon.svg" width="200" >
 
+[![License](https://img.shields.io/badge/license-Commercial-lightgrey)](https://github.com/sensorsdata/uni-app-native-plugin/blob/master/LICENSE)
+[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/sensorsdata/uni-app-native-plugin.svg)](http://isitmaintained.com/project/sensorsdata/uni-app-native-plugin "Average time to resolve an issue")
+[![Percentage of issues still open](http://isitmaintained.com/badge/open/sensorsdata/uni-app-native-plugin.svg)](http://isitmaintained.com/project/sensorsdata/uni-app-native-plugin "Percentage of issues still open")
+[![GitHub release](https://img.shields.io/github/tag/sensorsdata/uni-app-native-plugin.svg?label=release)](https://github.com/sensorsdata/uni-app-native-plugin/releases)
+[![GitHub release date](https://img.shields.io/github/release-date/sensorsdata/uni-app-native-plugin.svg)](https://github.com/sensorsdata/uni-app-native-plugin/releases)
+![platform](https://img.shields.io/badge/platform-Android%20%7C%20iOS-green)
 
 
 ## 神策简介
