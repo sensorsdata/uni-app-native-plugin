@@ -5,7 +5,7 @@
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/sensorsdata/uni-app-native-plugin.svg)](http://isitmaintained.com/project/sensorsdata/uni-app-native-plugin "Percentage of issues still open")
 [![GitHub release](https://img.shields.io/github/tag/sensorsdata/uni-app-native-plugin.svg?label=release)](https://github.com/sensorsdata/uni-app-native-plugin/releases)
 [![GitHub release date](https://img.shields.io/github/release-date/sensorsdata/uni-app-native-plugin.svg)](https://github.com/sensorsdata/uni-app-native-plugin/releases)
-![platform](https://img.shields.io/badge/platform-Android%20%7C%20iOS-green)
+![platform](https://img.shields.io/badge/platform-Android%20%7C%20iOS-yellowgreen)
 
 
 ## 神策简介
