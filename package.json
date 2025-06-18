@@ -1,8 +1,8 @@
 {
   "name": "Sensorsdata-UniPlugin-App",
   "id": "Sensorsdata-UniPlugin-App",
-  "version": "0.1.8",
-  "description": "插件描述信息",
+  "version": "0.1.9",
+  "description": "神策分析 SDK Uni-App 原生插件",
   "_dp_type": "nativeplugin",
   "_dp_nativeplugin": {
     "android": {
