@@ -7,12 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F2B3FDDD2EA61BAB0072D7E7 /* SensorsAnalyticsSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC692F2A25B181270010296F /* SensorsAnalyticsSDK.framework */; };
+		F2B3FDDE2EA61BAB0072D7E7 /* SensorsAnalyticsSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FC692F2A25B181270010296F /* SensorsAnalyticsSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FC692F1D25B180DE0010296F /* UniSensorsAnalyticsProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = FC692F1925B180DE0010296F /* UniSensorsAnalyticsProxy.m */; };
 		FC692F1E25B180DE0010296F /* UniSensorsAnalyticsModule.h in Headers */ = {isa = PBXBuildFile; fileRef = FC692F1A25B180DE0010296F /* UniSensorsAnalyticsModule.h */; };
 		FC692F1F25B180DE0010296F /* UniSensorsAnalyticsProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = FC692F1B25B180DE0010296F /* UniSensorsAnalyticsProxy.h */; };
 		FC692F2025B180DE0010296F /* UniSensorsAnalyticsModule.m in Sources */ = {isa = PBXBuildFile; fileRef = FC692F1C25B180DE0010296F /* UniSensorsAnalyticsModule.m */; };
-		FC692F2B25B181270010296F /* SensorsAnalyticsSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC692F2A25B181270010296F /* SensorsAnalyticsSDK.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F2B3FDDF2EA61BAC0072D7E7 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				F2B3FDDE2EA61BAB0072D7E7 /* SensorsAnalyticsSDK.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		FC692F0C25B180CA0010296F /* UniSensorsAnalyticsModule.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = UniSensorsAnalyticsModule.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -29,7 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FC692F2B25B181270010296F /* SensorsAnalyticsSDK.framework in Frameworks */,
+				F2B3FDDD2EA61BAB0072D7E7 /* SensorsAnalyticsSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,6 +111,7 @@
 				FC692F0825B180CA0010296F /* Sources */,
 				FC692F0925B180CA0010296F /* Frameworks */,
 				FC692F0A25B180CA0010296F /* Resources */,
+				F2B3FDDF2EA61BAC0072D7E7 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -287,7 +303,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../../../GitHub/uniapp_custom_base/SDK/inc\"/**";
+				HEADER_SEARCH_PATHS = "/Users/chenyuguo/Documents/uniapp-SDK/SDK/inc/**";
 				INFOPLIST_FILE = UniSensorsAnalyticsModule/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -313,7 +329,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../../../GitHub/uniapp_custom_base/SDK/inc\"/**";
+				HEADER_SEARCH_PATHS = "/Users/chenyuguo/Documents/uniapp-SDK/SDK/inc/**";
 				INFOPLIST_FILE = UniSensorsAnalyticsModule/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (

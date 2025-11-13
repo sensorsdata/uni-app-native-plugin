@@ -48,6 +48,7 @@
 }
 
 - (BOOL)application:(UIApplication *_Nullable)application didFinishLaunchingWithOptions:(NSDictionary *_Nullable)launchOptions {
+    [UniSensorsAnalyticsModule sharedModule].launchOptions = launchOptions;
     return YES;
 }
 

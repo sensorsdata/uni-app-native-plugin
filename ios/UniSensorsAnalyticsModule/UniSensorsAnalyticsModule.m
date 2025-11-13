@@ -33,7 +33,7 @@
 #import <SensorsFocus/SensorsFocus.h>
 #endif
 
-static NSString *const kSAUniPluginVersion = @"app_uniapp:0.1.9";
+static NSString *const kSAUniPluginVersion = @"app_uniapp:0.2.0";
 static NSString *const kSAUniPluginVersionKey = @"$lib_plugin_version";
 
 static NSString *kSFPlanIdKey = @"planId";
@@ -467,7 +467,7 @@ WX_EXPORT_METHOD(@selector(initSDK:))
     }
 
     // 初始化配置
-    SAConfigOptions *configOptions = [[SAConfigOptions alloc] initWithServerURL:serverURL launchOptions:nil];
+    SAConfigOptions *configOptions = [[SAConfigOptions alloc] initWithServerURL:serverURL launchOptions:UniSensorsAnalyticsModule.sharedModule.launchOptions];
 
     NSNumber *enableLog = config[@"show_log"];
     if ([enableLog isKindOfClass:[NSNumber class]]) {
@@ -790,10 +790,6 @@ WX_EXPORT_METHOD_SYNC(@selector(getScreenOrientation))
     return @"";
 }
 
-
-#pragma mark - SF Related
-#if __has_include(<SensorsFocus/SensorsFocus.h>)
-
 + (instancetype)sharedModule {
     static UniSensorsAnalyticsModule *sharedInstance = nil;
     static dispatch_once_t onceToken;
@@ -803,6 +799,8 @@ WX_EXPORT_METHOD_SYNC(@selector(getScreenOrientation))
     return sharedInstance;
 }
 
+#pragma mark - SF Related
+#if __has_include(<SensorsFocus/SensorsFocus.h>)
 
 UNI_EXPORT_METHOD(@selector(popupLoadSuccess:))
 
